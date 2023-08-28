@@ -103,7 +103,7 @@ fun LoginContent(viewModel: LoginViewModel = hiltViewModel()) {
                     }
                 )
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 5.dp),
+                    modifier = Modifier.padding(top = 0.dp),
                     value = viewModel.password.value,
                     onValueChange = { viewModel.password.value = it},
                     label = "Password",

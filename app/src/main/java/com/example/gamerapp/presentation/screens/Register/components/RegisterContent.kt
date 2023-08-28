@@ -14,7 +14,6 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -32,156 +31,149 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gamerapp.R
 import androidx.compose.material3.Icon
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
+import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 
 
-@Preview(showBackground = true)
+
 @Composable
-fun RegisterContent() {
+fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
     Box(
         modifier = Modifier
             .fillMaxWidth(),
 
         ) {
-        RegisterBoxHeader()
-        RegisterCardForm()
-    }
-}
-
-@Composable
-fun RegisterBoxHeader() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(280.dp)
-            .background(Red500)
-    ) {
-
-        Column(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(280.dp)
+                .background(Red500)
         ) {
-            Image(
-                modifier = Modifier.height(130.dp).padding(top = 20.dp),
-                painter = painterResource(id = R.drawable.user),
-                contentDescription = "imagen de usuario"
-            )
+
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Image(
+                    modifier = Modifier
+                        .height(130.dp)
+                        .padding(top = 20.dp),
+                    painter = painterResource(id = R.drawable.user),
+                    contentDescription = "imagen de usuario"
+                )
+            }
+
         }
 
-    }
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun RegisterCardForm() {
-
-    var email by remember {
-        mutableStateOf("")
-    }
-
-    var user by remember {
-        mutableStateOf("")
-    }
-
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    var confirmPassword by remember {
-        mutableStateOf("")
-    }
-
-    var passwordVisibility by remember { mutableStateOf(false) }
-    var confirmPasswordVisibility by remember { mutableStateOf(false) }
-
-    Card(
-        Modifier.padding(start = 30.dp, end = 30.dp, top = 155.dp),
-        colors = CardDefaults.cardColors(containerColor = Dargray500)
-    ) {
-        Column(
-            modifier = Modifier.padding(horizontal = 20.dp)
+        Card(
+            Modifier.padding(start = 30.dp, end = 30.dp, top = 155.dp),
+            colors = CardDefaults.cardColors(containerColor = Dargray500)
         ) {
-            Text(
-                modifier = Modifier.padding(top = 40.dp),
-                text = "REGISTRO",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = "Por favor ingrese estos datos para continuar",
-                fontSize = 12.sp,
-                color = Color.Gray
-            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(top = 40.dp),
+                    text = "REGISTRO",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = "Por favor ingrese estos datos para continuar",
+                    fontSize = 12.sp,
+                    color = Color.Gray
+                )
 
-            DefaultTextField(
-                modifier = Modifier.padding(top = 25.dp),
-                value = user,
-                onValueChange = { user = it},
-                label = "Nombre de usuario",
-                icon = Icons.Default.Person,
-            )
-
-            DefaultTextField(
-                modifier = Modifier.padding(top = 5.dp),
-                value = email,
-                onValueChange = { email = it},
-                label = "Correo electronico",
-                icon = Icons.Default.Email,
-                keyboardType = KeyboardType.Email
-            )
-            DefaultTextField(
-                modifier = Modifier.padding(top = 5.dp),
-                value = password,
-                onValueChange = { password = it},
-                label = "Password",
-                icon = Icons.Default.Lock,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            passwordVisibility = !passwordVisibility
-                        }
-                    ) {
-                        Icon(
-                            painter = if (passwordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
-                            contentDescription = "Toggle Password Icon"
-                        )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 25.dp),
+                    value = registerViewModel.userName.value,
+                    onValueChange = { registerViewModel.userName.value = it},
+                    label = "Nombre de usuario",
+                    icon = Icons.Default.Person,
+                    errorMsg = registerViewModel.userNameErrorMsg.value,
+                    validateField = {
+                        registerViewModel.validateUserName()
                     }
-                },
-                visualTransformation = if (passwordVisibility) VisualTransformation.None else PasswordVisualTransformation()
-            )
+                )
 
-            DefaultTextField(
-                modifier = Modifier.padding(top = 5.dp),
-                value = confirmPassword,
-                onValueChange = { confirmPassword = it},
-                label = "Confirmar Password",
-                icon = Icons.Default.Lock,
-                trailingIcon = {
-                    IconButton(
-                        onClick = {
-                            confirmPasswordVisibility = !confirmPasswordVisibility
-                        }
-                    ) {
-                        Icon(
-                            painter = if (confirmPasswordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
-                            contentDescription = "Toggle Password Icon"
-                        )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 0.dp),
+                    value = registerViewModel.email.value,
+                    onValueChange = { registerViewModel.email.value = it},
+                    label = "Correo electronico",
+                    icon = Icons.Default.Email,
+                    keyboardType = KeyboardType.Email,
+                    errorMsg = registerViewModel.emailErrMsg.value,
+                    validateField = {
+                        registerViewModel.validateEmail()
                     }
-                },
-                visualTransformation = if (confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation()
-            )
+                )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 0.dp),
+                    value = registerViewModel.password.value,
+                    onValueChange = {  registerViewModel.password.value = it},
+                    label = "Password",
+                    icon = Icons.Default.Lock,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                registerViewModel.passwordVisibility.value = ! registerViewModel.passwordVisibility.value
+                            }
+                        ) {
+                            Icon(
+                                painter = if (registerViewModel.passwordVisibility.value) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
+                                contentDescription = "Toggle Password Icon"
+                            )
+                        }
+                    },
+                    visualTransformation = if (registerViewModel.passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+                    errorMsg = registerViewModel.passwordErrMsg.value,
+                    validateField = {
+                        registerViewModel.validatePassword()
+                    }
+                )
 
-            DefaultButtom(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 15.dp),
-                text = "REGISTRARSE",
-                onClick = {  },
-            )
+                DefaultTextField(
+                    modifier = Modifier.padding(top = 0.dp),
+                    value = registerViewModel.confirmPassword.value,
+                    onValueChange = { registerViewModel.confirmPassword.value = it},
+                    label = "Confirmar Password",
+                    icon = Icons.Default.Lock,
+                    trailingIcon = {
+                        IconButton(
+                            onClick = {
+                                registerViewModel.confirmPasswordVisibility.value = !registerViewModel.confirmPasswordVisibility.value
+                            }
+                        ) {
+                            Icon(
+                                painter = if (registerViewModel.confirmPasswordVisibility.value) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
+                                contentDescription = "Toggle Password Icon"
+                            )
+                        }
+                    },
+                    visualTransformation = if (registerViewModel.confirmPasswordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+                    errorMsg = registerViewModel.confirmPasswordErrorMsg.value,
+                    validateField = {
+                        registerViewModel.validateConfirmPassword()
+                    }
+                )
+
+                DefaultButtom(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 15.dp),
+                    text = "REGISTRARSE",
+                    onClick = {  },
+                    enable = registerViewModel.isEnableLoginButton
+
+                )
+            }
         }
     }
 }

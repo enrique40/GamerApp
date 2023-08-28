@@ -56,7 +56,7 @@ fun DefaultTextField(
             visualTransformation = visualTransformation
         )
         Text(
-            modifier = Modifier.padding(5.dp),
+            modifier = Modifier.padding(2.dp),
             text = errorMsg,
             fontSize = 11.sp,
             color = Red700
