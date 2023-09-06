@@ -6,6 +6,7 @@ import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.auth.GetCurrentUser
 import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
+import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -27,6 +28,7 @@ object AppModule {
     fun providerAuthUseCase(respository: AuthRespository) = AuthUseCases(
         getCurrentUser = GetCurrentUser(respository),
         login = Login(respository),
-        logout = Logout(respository)
+        logout = Logout(respository),
+        signup = Signup(respository)
     )
 }

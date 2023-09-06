@@ -15,10 +15,10 @@ fun RegisterSreen(navController: NavHostController) {
     Scaffold(
         topBar = { },
         content = {
-            RegisterContent()
+            RegisterContent(navController)
         },
          bottomBar = {
-             RegisterBottomBar(navController)
+
          }
     )
 }

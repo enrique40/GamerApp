@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
@@ -52,6 +54,7 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
     val loginFlow = viewModel.loginFlow.collectAsState()
+    val scrollState = rememberScrollState()
 
     Box(
         modifier = Modifier
@@ -84,7 +87,7 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
             colors = CardDefaults.cardColors(containerColor = Dargray500)
         ) {
             Column(
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.verticalScroll(scrollState).padding(horizontal = 20.dp)
             ) {
                 Text(
                     modifier = Modifier.padding(top = 40.dp),
@@ -100,7 +103,7 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
                 )
 
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 25.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 25.dp),
                     value = viewModel.email.value,
                     onValueChange = { viewModel.email.value = it},
                     label = "Correo electronico",
@@ -112,7 +115,7 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
                     }
                 )
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 0.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
                     value = viewModel.password.value,
                     onValueChange = { viewModel.password.value = it},
                     label = "Password",
@@ -145,6 +148,8 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
                     },
                     enable = viewModel.isEnableLoginButton
                 )
+
+                LoginBottomBar(navController)
             }
         }
     }

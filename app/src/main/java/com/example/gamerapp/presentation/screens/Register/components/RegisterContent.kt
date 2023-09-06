@@ -1,19 +1,24 @@
 package com.example.gamerapp.presentation.screens.login.components
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,10 +36,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gamerapp.R
 import androidx.compose.material3.Icon
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
+import com.example.gamerapp.presentation.navigation.AppScreen
 import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
+import com.example.gamerapp.presentation.screens.Register.components.RegisterBottomBar
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
 
@@ -42,7 +52,12 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 
 
 @Composable
-fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
+fun RegisterContent(navController: NavHostController, registerViewModel: RegisterViewModel = hiltViewModel()) {
+
+    //para saber en que estado se encuentra nustra peticion
+    val signupFlow = registerViewModel.signupFlow.collectAsState()
+    val scrollState = rememberScrollState()
+
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -51,7 +66,7 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(280.dp)
+                .height(250.dp)
                 .background(Red500)
         ) {
 
@@ -71,14 +86,14 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
         }
 
         Card(
-            Modifier.padding(start = 30.dp, end = 30.dp, top = 155.dp),
+            Modifier.padding(start = 30.dp, end = 30.dp, top = 140.dp),
             colors = CardDefaults.cardColors(containerColor = Dargray500)
         ) {
             Column(
-                modifier = Modifier.padding(horizontal = 20.dp)
+                modifier = Modifier.verticalScroll(scrollState).padding(horizontal = 20.dp)
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 40.dp),
+                    modifier = Modifier.padding(top = 15.dp),
                     text = "REGISTRO",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
@@ -91,7 +106,7 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
                 )
 
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 25.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 15.dp),
                     value = registerViewModel.userName.value,
                     onValueChange = { registerViewModel.userName.value = it},
                     label = "Nombre de usuario",
@@ -103,7 +118,7 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
                 )
 
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 0.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
                     value = registerViewModel.email.value,
                     onValueChange = { registerViewModel.email.value = it},
                     label = "Correo electronico",
@@ -115,7 +130,7 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
                     }
                 )
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 0.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
                     value = registerViewModel.password.value,
                     onValueChange = {  registerViewModel.password.value = it},
                     label = "Password",
@@ -140,7 +155,7 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
                 )
 
                 DefaultTextField(
-                    modifier = Modifier.padding(top = 0.dp),
+                    modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
                     value = registerViewModel.confirmPassword.value,
                     onValueChange = { registerViewModel.confirmPassword.value = it},
                     label = "Confirmar Password",
@@ -167,13 +182,41 @@ fun RegisterContent(registerViewModel: RegisterViewModel = hiltViewModel()) {
                 DefaultButtom(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 15.dp),
+                        .padding(vertical = 5.dp),
                     text = "REGISTRARSE",
-                    onClick = {  },
+                    onClick = {
+                              registerViewModel.onSignup()
+                    },
                     enable = registerViewModel.isEnableLoginButton
 
                 )
+
+                RegisterBottomBar(navController)
             }
+        }
+    }
+
+    signupFlow.value.let {
+        when(it){
+            Response.Loadin -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ){
+                    CircularProgressIndicator()
+                }
+            }
+            is Response.Sucess -> {
+                LaunchedEffect(Unit) {
+                    navController.navigate(route = AppScreen.Profile.route){
+                        popUpTo(AppScreen.Register.route){ inclusive = true }
+                    }
+                }
+            }
+            is Response.Failure -> {
+                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
+            }
+            else -> {}
         }
     }
 }
