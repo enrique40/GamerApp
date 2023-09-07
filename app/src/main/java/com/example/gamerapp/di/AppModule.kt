@@ -8,6 +8,10 @@ import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +22,11 @@ import dagger.hilt.components.SingletonComponent
 @Module
 object AppModule {
 
+    @Provides
+    fun providerFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+
+    @Provides
+    fun providerUserRef(db: FirebaseFirestore)
     @Provides
     fun providerFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 

@@ -66,9 +66,13 @@ dependencies {
 
     //Dager Hilt
     implementation("com.google.dagger:hilt-android:2.44")
-    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
     kapt("com.google.dagger:hilt-android-compiler:2.44")
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
+
+    // FIREBASE
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.firebase:firebase-auth-ktx:21.1.0'
 
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
