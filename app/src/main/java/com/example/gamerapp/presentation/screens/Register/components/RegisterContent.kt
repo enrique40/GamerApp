@@ -208,6 +208,7 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
             }
             is Response.Sucess -> {
                 LaunchedEffect(Unit) {
+                    registerViewModel.createUser()
                     navController.popBackStack(AppScreen.Login.route, true)
                     navController.navigate(route = AppScreen.Profile.route)
                 }
