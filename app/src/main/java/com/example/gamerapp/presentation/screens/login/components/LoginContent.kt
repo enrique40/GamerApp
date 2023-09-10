@@ -53,8 +53,8 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 @Composable
 fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
 
-    val loginFlow = viewModel.loginFlow.collectAsState()
     val scrollState = rememberScrollState()
+    val state = viewModel.state
 
     Box(
         modifier = Modifier
@@ -104,36 +104,36 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
 
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 25.dp),
-                    value = viewModel.email.value,
-                    onValueChange = { viewModel.email.value = it},
+                    value = state.email,
+                    onValueChange = { viewModel.onEmailInput(it)},
                     label = "Correo electronico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = viewModel.emailErrMsg.value,
+                    errorMsg = viewModel.emailErrMsg,
                     validateField = {
                         viewModel.validateEmail()
                     }
                 )
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
-                    value = viewModel.password.value,
-                    onValueChange = { viewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = { viewModel.onPasswordInput(it)},
                     label = "Password",
                     icon = Icons.Default.Lock,
                     trailingIcon = {
                         IconButton(
                             onClick = {
-                                viewModel.passwordVisibility.value = !viewModel.passwordVisibility.value
+                                viewModel.passwordVisibility = !viewModel.passwordVisibility
                             }
                         ) {
                             Icon(
-                                painter = if (viewModel.passwordVisibility.value) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
+                                painter = if (viewModel.passwordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
                                 contentDescription = "Toggle Password Icon"
                             )
                         }
                     },
-                    visualTransformation = if (viewModel.passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
-                    errorMsg = viewModel.passwordErrMsg.value,
+                    visualTransformation = if (viewModel.passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    errorMsg = viewModel.passwordErrMsg,
                     validateField = {
                         viewModel.validatePassword()
                     }
@@ -154,28 +154,4 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
         }
     }
 
-    loginFlow.value.let {
-        when(it){
-            //MOSTRAR AL USUARIO QUE SE ESTA MOSTRANDO LA PETICION Y TODAVIA ESA EN PROCESO
-            Response.Loadin -> {
-                Box(
-                    contentAlignment = Alignment.Center,
-                    modifier = Modifier.fillMaxSize()
-                    ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Sucess -> {
-                LaunchedEffect(Unit){
-                    navController.navigate(route = AppScreen.Profile.route){
-                        popUpTo(AppScreen.Login.route) { inclusive = true }
-                    }
-                }
-            }
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido" , Toast.LENGTH_LONG).show()
-            }
-            else -> {}
-        }
-    }
 }

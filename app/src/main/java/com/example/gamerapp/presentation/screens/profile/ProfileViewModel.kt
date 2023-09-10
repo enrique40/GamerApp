@@ -1,5 +1,6 @@
 package com.example.gamerapp.presentation.screens.profile
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -28,6 +29,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun getUserById() = viewModelScope.launch {
         usersUseCase.getUserById(authUseCases.getCurrentUser()!!.uid).collect() {data ->
+            Log.e("TAG", "getUserById --${data}")
             userData = data
         }
     }

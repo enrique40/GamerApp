@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.gamerapp.presentation.screens.login.components.Login
 import com.example.gamerapp.presentation.screens.login.components.LoginBottomBar
 import com.example.gamerapp.presentation.screens.login.components.LoginContent
 import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
@@ -29,6 +30,8 @@ fun LoginScreen(navController: NavHostController) {
 
         }
     )
+    // Manejar el estado de la peticion del login
+    Login(navController = navController)
 }
 
 
