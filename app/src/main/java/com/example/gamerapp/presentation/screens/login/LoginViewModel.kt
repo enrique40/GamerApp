@@ -23,11 +23,11 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases):
         private set
 
 
-    var passwordVisibility: Boolean by  mutableStateOf(false)
-    var isEmailValid: Boolean by mutableStateOf(false)
-    var emailErrMsg: String by mutableStateOf("")
-    var isPasswordValid: Boolean by mutableStateOf(false)
-    var passwordErrMsg: String by mutableStateOf("")
+    var passwordVisibility by  mutableStateOf(false)
+    var isEmailValid by mutableStateOf(false)
+    var emailErrMsg by mutableStateOf("")
+    var isPasswordValid by mutableStateOf(false)
+    var passwordErrMsg by mutableStateOf("")
     var isEnableLoginButton = false
 
     //LOGIN STATE

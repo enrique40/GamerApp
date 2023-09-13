@@ -1,12 +1,10 @@
 package com.example.gamerapp.presentation.screens.login.components
 
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -18,11 +16,9 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,18 +27,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gamerapp.R
 import androidx.compose.material3.Icon
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
-import com.example.gamerapp.presentation.navigation.AppScreen
 import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
 import com.example.gamerapp.presentation.screens.Register.components.RegisterBottomBar
 import com.example.gamerapp.presentation.ui.theme.Dargray500
@@ -54,8 +46,7 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 @Composable
 fun RegisterContent(navController: NavHostController, registerViewModel: RegisterViewModel = hiltViewModel()) {
 
-    //para saber en que estado se encuentra nustra peticion
-    val signupFlow = registerViewModel.signupFlow.collectAsState()
+    val state = registerViewModel.state
     val scrollState = rememberScrollState()
 
     Box(
@@ -107,11 +98,11 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
 
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 15.dp),
-                    value = registerViewModel.userName.value,
-                    onValueChange = { registerViewModel.userName.value = it},
+                    value = state.username,
+                    onValueChange = { registerViewModel.onUserNameInput(it)},
                     label = "Nombre de usuario",
                     icon = Icons.Default.Person,
-                    errorMsg = registerViewModel.userNameErrorMsg.value,
+                    errorMsg = registerViewModel.userNameErrorMsg,
                     validateField = {
                         registerViewModel.validateUserName()
                     }
@@ -119,36 +110,36 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
 
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
-                    value = registerViewModel.email.value,
-                    onValueChange = { registerViewModel.email.value = it},
+                    value = state.email,
+                    onValueChange = { registerViewModel.onEmailInput(it)},
                     label = "Correo electronico",
                     icon = Icons.Default.Email,
                     keyboardType = KeyboardType.Email,
-                    errorMsg = registerViewModel.emailErrMsg.value,
+                    errorMsg = registerViewModel.emailErrMsg,
                     validateField = {
                         registerViewModel.validateEmail()
                     }
                 )
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
-                    value = registerViewModel.password.value,
-                    onValueChange = {  registerViewModel.password.value = it},
+                    value = state.password,
+                    onValueChange = {  registerViewModel.onPasswordInput(it)},
                     label = "Password",
                     icon = Icons.Default.Lock,
                     trailingIcon = {
                         IconButton(
                             onClick = {
-                                registerViewModel.passwordVisibility.value = ! registerViewModel.passwordVisibility.value
+                                registerViewModel.passwordVisibility = ! registerViewModel.passwordVisibility
                             }
                         ) {
                             Icon(
-                                painter = if (registerViewModel.passwordVisibility.value) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
+                                painter = if (registerViewModel.passwordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
                                 contentDescription = "Toggle Password Icon"
                             )
                         }
                     },
-                    visualTransformation = if (registerViewModel.passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
-                    errorMsg = registerViewModel.passwordErrMsg.value,
+                    visualTransformation = if (registerViewModel.passwordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    errorMsg = registerViewModel.passwordErrMsg,
                     validateField = {
                         registerViewModel.validatePassword()
                     }
@@ -156,24 +147,24 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
 
                 DefaultTextField(
                     modifier = Modifier.fillMaxWidth().padding(top = 0.dp),
-                    value = registerViewModel.confirmPassword.value,
-                    onValueChange = { registerViewModel.confirmPassword.value = it},
+                    value = state.confirmPassword,
+                    onValueChange = { registerViewModel.onConfirmPasswordInput(it)},
                     label = "Confirmar Password",
                     icon = Icons.Default.Lock,
                     trailingIcon = {
                         IconButton(
                             onClick = {
-                                registerViewModel.confirmPasswordVisibility.value = !registerViewModel.confirmPasswordVisibility.value
+                                registerViewModel.confirmPasswordVisibility = !registerViewModel.confirmPasswordVisibility
                             }
                         ) {
                             Icon(
-                                painter = if (registerViewModel.confirmPasswordVisibility.value) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
+                                painter = if (registerViewModel.confirmPasswordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
                                 contentDescription = "Toggle Password Icon"
                             )
                         }
                     },
-                    visualTransformation = if (registerViewModel.confirmPasswordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
-                    errorMsg = registerViewModel.confirmPasswordErrorMsg.value,
+                    visualTransformation = if (registerViewModel.confirmPasswordVisibility) VisualTransformation.None else PasswordVisualTransformation(),
+                    errorMsg = registerViewModel.confirmPasswordErrorMsg,
                     validateField = {
                         registerViewModel.validateConfirmPassword()
                     }
@@ -196,27 +187,4 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
         }
     }
 
-    signupFlow.value.let {
-        when(it){
-            Response.Loadin -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ){
-                    CircularProgressIndicator()
-                }
-            }
-            is Response.Sucess -> {
-                LaunchedEffect(Unit) {
-                    registerViewModel.createUser()
-                    navController.popBackStack(AppScreen.Login.route, true)
-                    navController.navigate(route = AppScreen.Profile.route)
-                }
-            }
-            is Response.Failure -> {
-                Toast.makeText(LocalContext.current, it.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
-            }
-            else -> {}
-        }
-    }
 }
