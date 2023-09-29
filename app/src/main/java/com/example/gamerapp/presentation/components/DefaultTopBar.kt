@@ -1,38 +1,47 @@
 package com.example.gamerapp.presentation.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.example.gamerapp.presentation.navigation.AppScreen
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DefaultTopBar(
-    imageVector: ImageVector,
-    navController: NavHostController,
-    modifier: Modifier = Modifier.width(30.dp).height(30.dp)
+    title: String,
+    upAvailable: Boolean = false,
+    navController: NavHostController? = null
 ) {
-    Row(
-        modifier = Modifier.padding(top = 10.dp),
-    ) {
-        Image(
-            modifier = modifier.clickable {
-                navController.navigate(AppScreen.Login.route)
-            },
-            imageVector = imageVector,
-            contentDescription = "",
-            colorFilter = ColorFilter.tint(Color.White)
 
-        )
-    }
+    TopAppBar(
+        title = {
+            Text(
+                text = title,
+                fontSize = 19.sp
+            )
+        },
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Blue)
+        ,
+        navigationIcon = {
+            if (upAvailable) {
+                IconButton(onClick = { navController?.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
+    )
 
 }

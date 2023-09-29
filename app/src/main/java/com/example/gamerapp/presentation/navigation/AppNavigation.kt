@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.example.gamerapp.presentation.screens.Register.RegisterSreen
 import com.example.gamerapp.presentation.screens.login.LoginScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileScreen
+import com.example.gamerapp.presentation.screens.profile_edit.ProfileEditScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -26,6 +27,10 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(route = AppScreen.Profile.route){
             ProfileScreen(navController)
+        }
+
+        composable(route = AppScreen.ProfileEdit.route){
+            ProfileEditScreen(navController)
         }
     }
 }

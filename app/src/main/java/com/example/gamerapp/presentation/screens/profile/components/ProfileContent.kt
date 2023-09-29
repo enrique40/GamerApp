@@ -86,7 +86,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             color = Color.White,
             icon = Icons.Default.Edit,
             onClick = {
-
+                navController.navigate(route = AppScreen.ProfileEdit.route)
             }
         )
         Spacer(modifier = Modifier.height(10.dp))
