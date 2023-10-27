@@ -1,4 +1,4 @@
-package com.example.gamerapp.presentation.screens.profile_edit.components
+package com.example.gamerapp.presentation.screens.profile_update.components
 
 import android.widget.Toast
 import androidx.compose.runtime.Composable
@@ -6,11 +6,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.ProgressBar
-import com.example.gamerapp.presentation.screens.profile_edit.ProfileEditViewModel
+import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 
 
 @Composable
-fun Update(viewModel: ProfileEditViewModel = hiltViewModel()) {
+fun Update(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
     when(val updateResponse = viewModel.updateResponse) {
         Response.Loading -> {
             ProgressBar()

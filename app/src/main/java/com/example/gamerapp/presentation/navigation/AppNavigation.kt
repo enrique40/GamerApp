@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.example.gamerapp.presentation.screens.Register.RegisterSreen
 import com.example.gamerapp.presentation.screens.login.LoginScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileScreen
-import com.example.gamerapp.presentation.screens.profile_edit.ProfileEditScreen
+import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateScreen
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -38,7 +38,7 @@ fun AppNavigation(navController: NavHostController) {
             })
             ){
             it.arguments?.getString("user")?.let {
-                ProfileEditScreen(navController)
+                ProfileUpdateScreen(navController)
             }
         }
     }

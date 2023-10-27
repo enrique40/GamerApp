@@ -1,5 +1,8 @@
-package com.example.gamerapp.presentation.screens.profile_edit
+package com.example.gamerapp.presentation.screens.profile_update
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -14,14 +17,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ProfileEditViewModel @Inject constructor(
+class ProfileUpdateViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val usersUSeCase: UsersUseCase
 
 ) : ViewModel() {
 
     //STATE FORM
-    var state by mutableStateOf(ProfileEditState())
+    var state by mutableStateOf(ProfileUpdateState())
         private set
 
     var userNameErrorMsg: String by mutableStateOf("")
@@ -35,11 +38,20 @@ class ProfileEditViewModel @Inject constructor(
     var updateResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
+    //IMAGE
+    var imageUri by mutableStateOf<Uri?>(null)
+    var hasImage by mutableStateOf(false)
 
     init {
         state = state.copy(username = user.username)
     }
 
+    fun onCameraResult(result: Boolean){
+        hasImage = result
+    }
+    fun onGalleryResult(uri: Uri) {
+        imageUri = uri
+    }
     fun onUpdate() {
         val myUser = User(
             id = user.id,
