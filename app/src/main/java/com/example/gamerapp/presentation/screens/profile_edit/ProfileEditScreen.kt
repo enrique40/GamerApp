@@ -6,20 +6,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultTopBar
-import com.example.gamerapp.presentation.screens.Register.components.Register
-import com.example.gamerapp.presentation.screens.login.components.RegisterContent
 import com.example.gamerapp.presentation.screens.profile_edit.components.ProfileEditContent
+import com.example.gamerapp.presentation.screens.profile_edit.components.Update
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileEditScreen(navController: NavHostController) {
+fun ProfileEditScreen(
+    navController: NavHostController
+    ) {
     Scaffold(
         topBar = {
             DefaultTopBar(
-                title = "Nuevo usuario",
+                title = "Editar Usuario",
                 upAvailable = true,
-                navController = navController
+                navController = navController,
             )
         },
         content = {
@@ -27,4 +28,5 @@ fun ProfileEditScreen(navController: NavHostController) {
         },
         bottomBar = {}
     )
+    Update()
 }

@@ -14,7 +14,7 @@ import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
 @Composable
 fun Register(navController: NavHostController, viewModel: RegisterViewModel = hiltViewModel()) {
     when(val registerResponse = viewModel.registerResponse){
-        Response.Loadin -> {
+        Response.Loading -> {
             ProgressBar()
         }
         is Response.Sucess -> {

@@ -73,7 +73,7 @@ class RegisterViewModel @Inject constructor(private val authUseCases: AuthUseCas
     }
 
     private fun signup(user: User) = viewModelScope.launch {
-        registerResponse = Response.Loadin
+        registerResponse = Response.Loading
         val result = authUseCases.signup(user)
         registerResponse = result
     }

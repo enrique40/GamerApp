@@ -50,7 +50,7 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases):
         state = state.copy(password = password)
     }
     fun login() = viewModelScope.launch {
-        loginResponse = Response.Loadin
+        loginResponse = Response.Loading
         val result = authUseCase.login(state.email, state.password)
         loginResponse = result
     }

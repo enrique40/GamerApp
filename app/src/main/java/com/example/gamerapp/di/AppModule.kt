@@ -13,6 +13,7 @@ import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.example.gamerapp.domain.use_cases.users.Create
 import com.example.gamerapp.domain.use_cases.users.GetUserById
+import com.example.gamerapp.domain.use_cases.users.Update
 import com.example.gamerapp.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -55,6 +56,7 @@ object AppModule {
     @Provides
     fun provideUsersUseCases(respository: UsersRepository) = UsersUseCase(
         create = Create(respository),
-        getUserById = GetUserById(respository)
+        getUserById = GetUserById(respository),
+        update = Update(respository)
     )
 }

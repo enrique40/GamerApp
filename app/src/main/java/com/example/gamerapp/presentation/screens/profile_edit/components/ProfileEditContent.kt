@@ -51,7 +51,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
         ) {
 
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth().padding(top = 80.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Image(
@@ -66,7 +66,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
         }
 
         Card(
-            Modifier.padding(start = 30.dp, end = 30.dp, top = 140.dp),
+            Modifier.padding(start = 30.dp, end = 30.dp, top = 220.dp),
             colors = CardDefaults.cardColors(containerColor = Dargray500)
         ) {
             Column(
@@ -74,7 +74,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
             ) {
                 Text(
                     modifier = Modifier.padding(top = 15.dp),
-                    text = "REGISTRO",
+                    text = "ACTUALIZACION",
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -103,7 +103,7 @@ fun ProfileEditContent(navController: NavHostController, viewModel: ProfileEditV
                         .padding(vertical = 5.dp),
                     text = "ACTUALIZAR DATOS",
                     onClick = {
-
+                        viewModel.onUpdate()
                     },
                 )
             }
