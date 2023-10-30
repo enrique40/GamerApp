@@ -11,7 +11,7 @@ class ComposeFileProvider : FileProvider(R.xml.file_paths) {
     companion object {
         fun getImageUri(context: Context): Uri{
 
-            val directory = File(context.cacheDir, "imagenes")
+            val directory = File(context.cacheDir, "images")
             directory.mkdirs()
             val file = File.createTempFile(
                 "selected_image_",

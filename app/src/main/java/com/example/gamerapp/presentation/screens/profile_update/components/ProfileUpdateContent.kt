@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
@@ -25,6 +26,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -38,6 +40,7 @@ import com.example.gamerapp.presentation.components.DefaultTextField
 import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
+import com.example.gamerapp.presentation.utils.ComposeFileProvider
 
 @Composable
 fun ProfileUpdateContent(navController: NavHostController, viewModel: ProfileUpdateViewModel = hiltViewModel()) {
@@ -59,6 +62,8 @@ fun ProfileUpdateContent(navController: NavHostController, viewModel: ProfileUpd
         }
     )
 
+    val context = LocalContext.current
+
 
     Box(
         modifier = Modifier
@@ -78,9 +83,9 @@ fun ProfileUpdateContent(navController: NavHostController, viewModel: ProfileUpd
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(80.dp))
-                if (viewModel.imageUri != null) {
+                if (viewModel.hasImage && viewModel.imageUri != null) {
                     AsyncImage(
-                        modifier = Modifier.fillMaxWidth().height(100.dp).clip(CircleShape),
+                        modifier = Modifier.height(100.dp).clip(CircleShape),
                         model = viewModel.imageUri,
                         contentDescription = "Selected image"
                     )
@@ -90,8 +95,10 @@ fun ProfileUpdateContent(navController: NavHostController, viewModel: ProfileUpd
                             .height(130.dp)
                             .padding(top = 20.dp)
                             .clickable {
-                                Log.e("TAG", "ProfileUpdateContent")
-                                imagePicker.launch("image/*")
+                                //imagePicker.launch("image/*")
+                                val uri = ComposeFileProvider.getImageUri(context)
+                                viewModel.imageUri = uri
+                                cameraLauncher.launch(uri)
                             }
                         ,
                         painter = painterResource(id = R.drawable.user),

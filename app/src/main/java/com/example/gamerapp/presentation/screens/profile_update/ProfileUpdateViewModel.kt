@@ -49,7 +49,8 @@ class ProfileUpdateViewModel @Inject constructor(
     fun onCameraResult(result: Boolean){
         hasImage = result
     }
-    fun onGalleryResult(uri: Uri) {
+    fun onGalleryResult(uri: Uri?) {
+        hasImage = uri != null  // true - false
         imageUri = uri
     }
     fun onUpdate() {
