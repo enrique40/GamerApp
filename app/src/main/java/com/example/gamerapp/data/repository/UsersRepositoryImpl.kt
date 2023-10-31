@@ -4,7 +4,6 @@ import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.domain.model.User
 import com.example.gamerapp.domain.repository.UsersRepository
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
@@ -37,7 +36,7 @@ class UsersRepositoryImpl @Inject constructor(private val usersRef: CollectionRe
     }
 
     override fun getUserById(id: String): Flow<User> = callbackFlow {
-        val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, e ->
+        val snapshotListener = usersRef.document(id).addSnapshotListener { snapshot, _ ->
             val user = snapshot?.toObject(User::class.java) ?: User()
             trySend(user)
         }

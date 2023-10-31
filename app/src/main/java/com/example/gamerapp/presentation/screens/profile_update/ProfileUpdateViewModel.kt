@@ -1,9 +1,6 @@
 package com.example.gamerapp.presentation.screens.profile_update
 
 import android.content.Context
-import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -53,14 +50,17 @@ class ProfileUpdateViewModel @Inject constructor(
 
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
-        imageUri = result.toString()
+        if (result != null) {
+            imageUri = result.toString()
+        }
     }
 
     fun takePhoto() = viewModelScope.launch {
         val result = resultingActivityHandler.takePicturePreview()
-        imageUri = ComposeFileProvider.getPathFromBitmap(context, result!!)
+        if (result != null) {
+            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
+        }
     }
-
 
     fun onUpdate() {
         val myUser = User(
@@ -70,7 +70,7 @@ class ProfileUpdateViewModel @Inject constructor(
         )
         update(myUser)
     }
-    fun update(user: User) = viewModelScope.launch {
+    private fun update(user: User) = viewModelScope.launch {
         updateResponse = Response.Loading
         val result = usersUSeCase.update(user)
         updateResponse = result
@@ -82,10 +82,10 @@ class ProfileUpdateViewModel @Inject constructor(
     }
 
     fun validateUserName(){
-        if (state.username.length >= 5){
-            userNameErrorMsg = ""
+        userNameErrorMsg = if (state.username.length >= 5){
+            ""
         }else{
-            userNameErrorMsg = "Al menos 5 caracteres"
+            "Al menos 5 caracteres"
         }
     }
 }

@@ -1,6 +1,5 @@
 package com.example.gamerapp.domain.use_cases.auth
 
-import com.example.gamerapp.data.repository.AuthRepositoryImpl
 import com.example.gamerapp.domain.repository.AuthRespository
 import javax.inject.Inject
 

@@ -10,7 +10,6 @@ import com.example.gamerapp.domain.model.User
 import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.users.UsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,7 +27,7 @@ class ProfileViewModel @Inject constructor(
     }
 
     private fun getUserById() = viewModelScope.launch {
-        usersUseCase.getUserById(authUseCases.getCurrentUser()!!.uid).collect() {data ->
+        usersUseCase.getUserById(authUseCases.getCurrentUser()!!.uid).collect { data ->
             Log.e("TAG", "getUserById --${data}")
             userData = data
         }

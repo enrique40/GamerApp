@@ -24,9 +24,9 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases):
 
 
     var passwordVisibility by  mutableStateOf(false)
-    var isEmailValid by mutableStateOf(false)
+    private var isEmailValid by mutableStateOf(false)
     var emailErrMsg by mutableStateOf("")
-    var isPasswordValid by mutableStateOf(false)
+    private var isPasswordValid by mutableStateOf(false)
     var passwordErrMsg by mutableStateOf("")
     var isEnableLoginButton = false
 
@@ -54,7 +54,7 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases):
         val result = authUseCase.login(state.email, state.password)
         loginResponse = result
     }
-    fun enabledLoginButton(){
+    private fun enabledLoginButton(){
         isEnableLoginButton = isEmailValid && isPasswordValid
 
     }

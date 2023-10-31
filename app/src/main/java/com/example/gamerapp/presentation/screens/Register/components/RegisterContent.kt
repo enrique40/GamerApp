@@ -1,4 +1,4 @@
-package com.example.gamerapp.presentation.screens.login.components
+package com.example.gamerapp.presentation.screens.Register.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -36,7 +36,6 @@ import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
 import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
-import com.example.gamerapp.presentation.screens.Register.components.RegisterBottomBar
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
 
