@@ -6,7 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultTopBar
 import com.example.gamerapp.presentation.screens.profile_update.components.ProfileUpdateContent
-import com.example.gamerapp.presentation.screens.profile_update.components.Update
+import com.example.gamerapp.presentation.screens.profile_update.components.ProfileUpdate
+import com.example.gamerapp.presentation.screens.profile_update.components.SaveImage
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -26,5 +27,6 @@ fun ProfileUpdateScreen(
         },
         bottomBar = {}
     )
-    Update()
+    SaveImage()
+    ProfileUpdate()
 }

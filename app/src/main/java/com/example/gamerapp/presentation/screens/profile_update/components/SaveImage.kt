@@ -8,18 +8,18 @@ import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateViewModel
 
-
 @Composable
-fun Update(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
-    when(val updateResponse = viewModel.updateResponse) {
+fun SaveImage(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
+
+    when(val response = viewModel.saveImageResponse) {
         Response.Loading -> {
             ProgressBar()
         }
         is Response.Sucess -> {
-            Toast.makeText(LocalContext.current, "Datos actualizado correctamente", Toast.LENGTH_LONG).show()
+            viewModel.onUpdate(response.data)
         }
         is Response.Failure -> {
-            Toast.makeText(LocalContext.current, updateResponse.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
+            Toast.makeText(LocalContext.current, response.exception?.message ?: "Error desconocido", Toast.LENGTH_LONG).show()
         }
         else -> {}
     }

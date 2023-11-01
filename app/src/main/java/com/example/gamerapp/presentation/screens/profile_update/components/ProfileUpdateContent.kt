@@ -144,7 +144,7 @@ fun ProfileUpdateContent(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
                         .padding(vertical = 5.dp),
                     text = "ACTUALIZAR DATOS",
                     onClick = {
-                        viewModel.onUpdate()
+                        viewModel.saveImage()
                     },
                 )
             }

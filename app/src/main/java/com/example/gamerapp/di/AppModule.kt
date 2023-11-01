@@ -12,6 +12,7 @@ import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.example.gamerapp.domain.use_cases.users.Create
 import com.example.gamerapp.domain.use_cases.users.GetUserById
+import com.example.gamerapp.domain.use_cases.users.SaveImage
 import com.example.gamerapp.domain.use_cases.users.Update
 import com.example.gamerapp.domain.use_cases.users.UsersUseCase
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +20,8 @@ import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -31,6 +34,10 @@ object AppModule {
 
     @Provides
     fun providerFirebaseFirestore(): FirebaseFirestore = Firebase.firestore
+    @Provides
+    fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
+    @Provides
+    fun providerStorageUsersRef(storage: FirebaseStorage): StorageReference = storage.reference.child(USERS)
 
     @Provides
     fun providerUserRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)
@@ -55,6 +62,7 @@ object AppModule {
     fun provideUsersUseCases(respository: UsersRepository) = UsersUseCase(
         create = Create(respository),
         getUserById = GetUserById(respository),
-        update = Update(respository)
+        update = Update(respository),
+        saveImage = SaveImage(respository)
     )
 }
