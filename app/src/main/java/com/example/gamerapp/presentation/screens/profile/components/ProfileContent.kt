@@ -101,7 +101,6 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             textColor = Color.Black,
             colorIcon = Color.Black,
             onClick = {
-                viewModel.userData.image = URLEncoder.encode(viewModel.userData.image, StandardCharsets.UTF_8.toString())
                 navController.navigate(
                     route = AppScreen.ProfileUpdate.passUser(viewModel.userData.toJson())
                 )
