@@ -32,13 +32,13 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(
-            route = AppScreen.ProfileEdit.route,
+            route = AppScreen.ProfileUpdate.route,
             arguments = listOf(navArgument("user"){
                 type = NavType.StringType
             })
             ){
             it.arguments?.getString("user")?.let {
-                ProfileUpdateScreen(navController)
+                ProfileUpdateScreen(navController, user = it)
             }
         }
     }

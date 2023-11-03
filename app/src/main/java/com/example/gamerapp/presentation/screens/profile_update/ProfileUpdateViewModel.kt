@@ -44,15 +44,15 @@ class ProfileUpdateViewModel @Inject constructor(
     var saveImageResponse by mutableStateOf<Response<String>?>(null)
         private set
 
-    //IMAGE
-    var imageUri by mutableStateOf("")
-
     //File
     var file: File? = null
 
     val resultingActivityHandler = ResultingActivityHandler()
     init {
-        state = state.copy(username = user.username)
+        state = state.copy(
+            username = user.username,
+            image = user.image
+        )
     }
 
     fun saveImage() = viewModelScope.launch {
@@ -67,15 +67,15 @@ class ProfileUpdateViewModel @Inject constructor(
         val result = resultingActivityHandler.getContent("image/*")
         if (result != null) {
             file = ComposeFileProvider.createFileFromUri(context, result)
-            imageUri = result.toString()
+            state = state.copy(image = result.toString())
         }
     }
 
     fun takePhoto() = viewModelScope.launch {
         val result = resultingActivityHandler.takePicturePreview()
         if (result != null) {
-            imageUri = ComposeFileProvider.getPathFromBitmap(context, result)
-            file = File(imageUri)
+            state = state.copy(image = ComposeFileProvider.getPathFromBitmap(context, result))
+            file = File(state.image)
         }
     }
 

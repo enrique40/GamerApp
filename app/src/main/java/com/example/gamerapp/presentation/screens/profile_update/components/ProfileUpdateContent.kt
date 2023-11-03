@@ -72,7 +72,7 @@ fun ProfileUpdateContent(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.height(80.dp))
-                if (viewModel.imageUri != "") {
+                if (viewModel.state.image != "") {
                     AsyncImage(
                         modifier = Modifier
                             .height(100.dp)
@@ -82,7 +82,7 @@ fun ProfileUpdateContent(viewModel: ProfileUpdateViewModel = hiltViewModel()) {
                                 bottomSheetsState.value = true
                             }
                         ,
-                        model = viewModel.imageUri,
+                        model = viewModel.state.image,
                         contentDescription = "Selected image",
                         contentScale = ContentScale.Crop
                     )

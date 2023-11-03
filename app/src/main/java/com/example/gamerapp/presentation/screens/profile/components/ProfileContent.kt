@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
@@ -16,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -25,10 +27,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import com.example.gamerapp.R
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.navigation.AppScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 
 @Composable
@@ -56,11 +61,23 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                     fontWeight = FontWeight.Bold
                 )
                 Spacer(modifier = Modifier.height(55.dp))
-                Image(
-                    modifier = Modifier.size(115.dp),
-                    painter = painterResource(id = R.drawable.user),
-                    contentDescription = "imagen de usario"
-                )
+                if (viewModel.userData.image != "") {
+                    AsyncImage(
+                        modifier =
+                        Modifier
+                            .size(115.dp)
+                            .clip(CircleShape),
+                        model = viewModel.userData.image,
+                        contentDescription = "User image",
+                        contentScale = ContentScale.Crop
+                    )
+                }else {
+                    Image(
+                        modifier = Modifier.size(115.dp),
+                        painter = painterResource(id = R.drawable.user),
+                        contentDescription = "imagen de usario"
+                    )
+                }
             }
         }
         Spacer(modifier = Modifier.height(55.dp))
@@ -84,8 +101,9 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             textColor = Color.Black,
             colorIcon = Color.Black,
             onClick = {
+                viewModel.userData.image = URLEncoder.encode(viewModel.userData.image, StandardCharsets.UTF_8.toString())
                 navController.navigate(
-                    route = AppScreen.ProfileEdit.passUser(viewModel.userData.toJson())
+                    route = AppScreen.ProfileUpdate.passUser(viewModel.userData.toJson())
                 )
             }
         )

@@ -12,7 +12,8 @@ import com.example.gamerapp.presentation.screens.profile_update.components.SaveI
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ProfileUpdateScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    user: String
     ) {
     Scaffold(
         topBar = {
