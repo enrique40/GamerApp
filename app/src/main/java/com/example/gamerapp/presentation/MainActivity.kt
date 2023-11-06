@@ -9,11 +9,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.gamerapp.presentation.navigation.AppNavigation
-import com.example.gamerapp.presentation.screens.login.LoginScreen
+import com.example.gamerapp.presentation.navigation.RootNavGraph
 import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,7 +27,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     navController = rememberNavController()
-                    AppNavigation(navController = navController)
+                    RootNavGraph(navController = navController)
                 }
             }
         }

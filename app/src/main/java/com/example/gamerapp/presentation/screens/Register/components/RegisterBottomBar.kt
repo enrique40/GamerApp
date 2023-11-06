@@ -15,7 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import com.example.gamerapp.presentation.navigation.AppScreen
+import com.example.gamerapp.presentation.navigation.AuthScreen
 
 @Composable
 fun RegisterBottomBar(navController: NavHostController) {
@@ -31,7 +31,7 @@ fun RegisterBottomBar(navController: NavHostController) {
         Spacer(modifier = Modifier.width(7.dp))
         Text(
             modifier = Modifier.clickable {
-                navController.navigate(route = AppScreen.Login.route)
+                navController.navigate(route = AuthScreen.Login.route)
             },
             text = "Login",
             color = Color.Red,
