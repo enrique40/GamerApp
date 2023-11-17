@@ -15,6 +15,7 @@ import com.example.gamerapp.presentation.screens.profile.ProfileScreen
 
 @Composable
 fun HomeBottonBarNavGraph(navController: NavHostController) {
+    //startDestination para identificar la ruta inicial
     NavHost(
         navController = navController,
         route = Graph.HOME,
@@ -38,10 +39,9 @@ sealed class HomeBottomBarScreen(
     val title: String,
     val icon: ImageVector
 ) {
-
     object Posts: HomeBottomBarScreen(
         route = "posts",
-        title = "Post",
+        title = "Posts",
         icon = Icons.Default.List
     )
 

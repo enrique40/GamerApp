@@ -8,6 +8,7 @@ import com.example.gamerapp.presentation.screens.Register.RegisterSreen
 import com.example.gamerapp.presentation.screens.login.LoginScreen
 
 fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
+    //startDestination para definir la ruta inicial osea que vista se ava a ejecutar primero
     navigation(
         route = Graph.AUTHENTICATION,
         startDestination = AuthScreen.Login.route

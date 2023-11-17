@@ -11,6 +11,7 @@ import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateScr
 
 @Composable
 fun RootNavGraph(navController: NavHostController) {
+    //Nota: para llamar a un NavHost dentro de otro se tiene que llamar dentro de un composable
     NavHost(
         navController = navController,
         route = Graph.ROOT,

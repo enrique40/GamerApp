@@ -9,26 +9,30 @@ import androidx.navigation.NavHostController
 import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.navigation.Graph
+import com.example.gamerapp.presentation.navigation.RootScreen
 import com.example.gamerapp.presentation.screens.login.LoginViewModel
 
 @Composable
 fun Login(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
-    when(val loginResponse = viewModel.loginResponse){
-        //MOSTRAR AL USUARIO QUE SE ESTA MOSTRANDO LA PETICION Y TODAVIA ESA EN PROCESO
+    when (val loginResponse = viewModel.loginResponse) {
+        // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {
             ProgressBar()
         }
         is Response.Sucess -> {
-            LaunchedEffect(Unit){
-                navController.navigate(route = RootScreen.Home.route){
+            LaunchedEffect(Unit) {
+                navController.navigate(route = RootScreen.Home.route) {
                     popUpTo(Graph.AUTHENTICATION) { inclusive = true }
                 }
             }
         }
         is Response.Failure -> {
-            Toast.makeText(LocalContext.current, loginResponse.exception?.message ?: "Error desconocido" , Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                LocalContext.current,
+                loginResponse.exception?.message ?: "Error desconido",
+                Toast.LENGTH_LONG
+            ).show()
         }
         else -> {}
     }
-    
 }
