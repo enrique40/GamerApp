@@ -27,8 +27,4 @@ sealed class AuthScreen(val route: String) {
 
     object Login: AuthScreen(route = "login")
     object Register: AuthScreen(route = "register")
-    object Profile: AuthScreen(route = "profile")
-    object ProfileUpdate: AuthScreen(route = "profile/update/{user}") {
-        fun passUser(user: String) = "profile/update/$user"
-    }
 }
