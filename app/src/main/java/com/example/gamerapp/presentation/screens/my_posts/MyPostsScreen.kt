@@ -1,6 +1,7 @@
 package com.example.gamerapp.presentation.screens.my_posts
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -13,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.navigation.DetailsScreen
+import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -24,7 +26,9 @@ fun MyPostsScreen(navController: NavHostController) {
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(bottom = 50.dp),
-                onClick = { navController.navigate(DetailsScreen.NewPost.route) }
+                onClick = { navController.navigate(DetailsScreen.NewPost.route) },
+                containerColor = Red500
+
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,
