@@ -1,15 +1,20 @@
 package com.example.gamerapp.di
 
+import com.example.gamerapp.core.Constants.POSTS
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.data.repository.AuthRepositoryImpl
+import com.example.gamerapp.data.repository.PostsRepositoryImpl
 import com.example.gamerapp.data.repository.UsersRepositoryImpl
 import com.example.gamerapp.domain.repository.AuthRespository
+import com.example.gamerapp.domain.repository.PostsRepository
 import com.example.gamerapp.domain.repository.UsersRepository
 import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.auth.GetCurrentUser
 import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
+import com.example.gamerapp.domain.use_cases.posts.CreatePost
+import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
 import com.example.gamerapp.domain.use_cases.users.Create
 import com.example.gamerapp.domain.use_cases.users.GetUserById
 import com.example.gamerapp.domain.use_cases.users.SaveImage
@@ -26,6 +31,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Named
 
 
 @InstallIn(SingletonComponent::class)
@@ -37,10 +43,20 @@ object AppModule {
     @Provides
     fun provideFirebaseStorage(): FirebaseStorage = FirebaseStorage.getInstance()
     @Provides
+    @Named(USERS)
     fun providerStorageUsersRef(storage: FirebaseStorage): StorageReference = storage.reference.child(USERS)
 
     @Provides
+    @Named(USERS)
     fun providerUserRef(db: FirebaseFirestore): CollectionReference = db.collection(USERS)
+
+    @Provides
+    @Named(POSTS)
+    fun providerStoragePostsRef(storage: FirebaseStorage): StorageReference = storage.reference.child(POSTS)
+
+    @Provides
+    @Named(POSTS)
+    fun providerPostsRef(db: FirebaseFirestore): CollectionReference = db.collection(POSTS)
     @Provides
     fun providerFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -49,6 +65,9 @@ object AppModule {
 
     @Provides
     fun providerUsersRepository(impl: UsersRepositoryImpl): UsersRepository = impl
+
+    @Provides
+    fun providerPostRepository(impl: PostsRepositoryImpl): PostsRepository = impl
 
     @Provides
     fun providerAuthUseCase(respository: AuthRespository) = AuthUseCases(
@@ -64,5 +83,9 @@ object AppModule {
         getUserById = GetUserById(respository),
         update = Update(respository),
         saveImage = SaveImage(respository)
+    )
+    @Provides
+    fun providePostsUseCases(respository: PostsRepository) = PostsUseCases(
+        create = CreatePost(respository),
     )
 }
