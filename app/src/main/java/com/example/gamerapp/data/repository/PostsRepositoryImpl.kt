@@ -2,14 +2,20 @@ package com.example.gamerapp.data.repository
 
 import android.net.Uri
 import com.example.gamerapp.core.Constants.POSTS
+import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Post
 import com.example.gamerapp.domain.model.Response
+import com.example.gamerapp.domain.model.User
 import com.example.gamerapp.domain.repository.PostsRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import javax.inject.Inject
@@ -17,18 +23,30 @@ import javax.inject.Named
 
 class PostsRepositoryImpl @Inject constructor(
     @Named(POSTS) private val postsRef: CollectionReference,
+    @Named(USERS) private val usersRef: CollectionReference,
     @Named(POSTS) private val storagePostRef: StorageReference,
 ): PostsRepository {
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow{
         val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
-            val postResponse = if (snapshot != null){
-                val post = snapshot.toObjects(Post::class.java)
-                Response.Sucess(post)
+            GlobalScope.launch(IO) {
+                val postResponse = if (snapshot != null){
+                    val post = snapshot.toObjects(Post::class.java)
+
+                    post.map { post->
+                        async {
+                            post.user = usersRef.document(post.idUser).get().await().toObject(User::class.java)!!
+                        }
+                    }.forEach {data ->
+                        data.await()
+                    }
+                    Response.Sucess(post)
+
+                }
+                else {
+                    Response.Failure(e)
+                }
+                trySend(postResponse)
             }
-            else {
-                Response.Failure(e)
-            }
-            trySend(postResponse)
         }
         awaitClose {
             snapshotListener.remove()

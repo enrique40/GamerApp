@@ -42,7 +42,7 @@ fun PostsCard(post: Post) {
                 )
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 7.dp),
-                text = post.idUser,
+                text = post.user.username,
                 fontSize = 12.sp
             )
             Text(
