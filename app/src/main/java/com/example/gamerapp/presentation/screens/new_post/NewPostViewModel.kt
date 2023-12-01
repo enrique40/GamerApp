@@ -83,6 +83,8 @@ class NewPostViewModel @Inject constructor(
 
     fun clearForm() {
         state = state.copy(name = "", category = "", description = "", image = "")
+        createPostResponse = null
+
     }
 
     fun onNameInput(name: String) {

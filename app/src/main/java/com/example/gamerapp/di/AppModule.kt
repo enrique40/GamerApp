@@ -14,6 +14,7 @@ import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.example.gamerapp.domain.use_cases.posts.CreatePost
+import com.example.gamerapp.domain.use_cases.posts.GetPosts
 import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
 import com.example.gamerapp.domain.use_cases.users.Create
 import com.example.gamerapp.domain.use_cases.users.GetUserById
@@ -87,5 +88,6 @@ object AppModule {
     @Provides
     fun providePostsUseCases(respository: PostsRepository) = PostsUseCases(
         create = CreatePost(respository),
+        getPosts = GetPosts(respository)
     )
 }
