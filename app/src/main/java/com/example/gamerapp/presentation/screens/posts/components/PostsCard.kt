@@ -38,19 +38,21 @@ fun PostsCard(post: Post) {
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp),
                 text = post.name,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                color = Color.Black
                 )
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 7.dp),
-                text = post.user.username,
-                fontSize = 12.sp
+                text = post.user?.username ?: "",
+                fontSize = 12.sp,
+                color = Color.Black
             )
             Text(
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 7.dp),
                 text = post.description,
                 fontSize = 13.sp,
                 maxLines = 2,
-                color = Color.Gray
+                color = Color.Black
             )
         }
     }

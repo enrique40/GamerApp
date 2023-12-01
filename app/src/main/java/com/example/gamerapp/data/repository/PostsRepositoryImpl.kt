@@ -1,6 +1,7 @@
 package com.example.gamerapp.data.repository
 
 import android.net.Uri
+import android.util.Log
 import com.example.gamerapp.core.Constants.POSTS
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Post
@@ -31,10 +32,23 @@ class PostsRepositoryImpl @Inject constructor(
             GlobalScope.launch(IO) {
                 val postResponse = if (snapshot != null){
                     val post = snapshot.toObjects(Post::class.java)
+                    val idUserArray = ArrayList<String>()
 
-                    post.map { post->
+                    post.forEach { post->
+                        idUserArray.add(post.idUser)
+                    }
+
+                    val idUserList = idUserArray.toSet().toList() //ELEMENTOS SIN REPETIR
+
+                    idUserList.map { id->
                         async {
-                            post.user = usersRef.document(post.idUser).get().await().toObject(User::class.java)!!
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            post.forEach { post ->
+                                if (post.idUser == id){
+                                    post.user = user
+                                }
+                            }
+                            Log.e("TAG", "getPosts: Id 4 ${id}")
                         }
                     }.forEach {data ->
                         data.await()
