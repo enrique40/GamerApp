@@ -36,8 +36,8 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
                 type = NavType.StringType
             })
         ){
-            it.arguments?.getString("post")?.let {
-                DetailPostScreen(navController =  navController, post = it)
+            it.arguments?.getString("post")?.let { post ->
+                DetailPostScreen(navController =  navController, post = post)
             }
         }
 
@@ -51,7 +51,7 @@ sealed class DetailsScreen(val route: String) {
     object ProfileUpdate: DetailsScreen(route = "profile/update/{user}") {
         fun passUser(user: String) = "profile/update/$user"
     }
-    object DetailPost: DetailsScreen(route = "posts/detail/{post}") {
-        fun passPost(post: String) = "posts/detail//$post"
+    object DetailPost: DetailsScreen( "posts/detail/{post}") {
+        fun passPost(post: String) = "posts/detail/$post"
     }
 }

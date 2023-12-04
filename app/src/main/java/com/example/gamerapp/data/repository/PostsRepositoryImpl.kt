@@ -1,7 +1,6 @@
 package com.example.gamerapp.data.repository
 
 import android.net.Uri
-import android.util.Log
 import com.example.gamerapp.core.Constants.POSTS
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Post
@@ -48,7 +47,6 @@ class PostsRepositoryImpl @Inject constructor(
                                     post.user = user
                                 }
                             }
-                            Log.e("TAG", "getPosts: Id 4 ${id}")
                         }
                     }.forEach {data ->
                         data.await()

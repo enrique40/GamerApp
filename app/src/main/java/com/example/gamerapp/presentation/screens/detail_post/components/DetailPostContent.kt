@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +24,10 @@ import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,29 +38,44 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.gamerapp.R
 import com.example.gamerapp.presentation.navigation.RootNavGraph
+import com.example.gamerapp.presentation.screens.detail_post.DetailPostViewModel
 import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @Composable
-fun DetailPostContent() {
+fun DetailPostContent(navController: NavHostController, viewModel: DetailPostViewModel = hiltViewModel()) {
 
     Column(modifier = Modifier
         .fillMaxWidth()
+        .fillMaxHeight()
+        .background(Color.Black)
         .verticalScroll(rememberScrollState())) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(300.dp),
-            painter = painterResource(id = R.drawable.user),
-           // model = "",
-            contentDescription = "",
-            contentScale = ContentScale.Crop
-        )
+        Box() {
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                model = viewModel.post.image,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
+            IconButton(onClick = { navController?.popBackStack() }) {
+                Icon(
+                    modifier = Modifier.size(35.dp),
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }
+        }
+
         Card(
             modifier = Modifier
                 .fillMaxWidth()
@@ -65,23 +85,21 @@ fun DetailPostContent() {
             shape = RoundedCornerShape(10.dp),
         ) {
             Row(modifier = Modifier.padding(vertical = 15.dp, horizontal = 15.dp)) {
-                Image(
+                AsyncImage(
                     modifier = Modifier
                         .size(55.dp)
-                        .clip(CircleShape)
-                    ,
-                    painter = painterResource(id = R.drawable.user),
-                    //model = "",
+                        .clip(CircleShape),
+                    model = viewModel.post.user?.image ?: "",
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
                 Column(modifier = Modifier.padding(top = 7.dp, start = 20.dp)) {
                     Text(
-                        text = "Nombre user",
+                        text = viewModel.post.user?.username ?: "",
                         fontSize = 13.sp
                     )
                     Text(
-                        text = "Email",
+                        text = viewModel.post.user?.email ?: "",
                         fontSize = 11.sp
                     )
                 }
@@ -89,7 +107,7 @@ fun DetailPostContent() {
         }
         Text(
             modifier = Modifier.padding(start = 20.dp, bottom = 15.dp),
-            text = "Titulo del juego",
+            text = viewModel.post.name,
             fontSize = 13.sp,
             color = Red500,
             fontWeight = FontWeight.Bold
@@ -107,11 +125,18 @@ fun DetailPostContent() {
             ) {
                 Image(
                     modifier = Modifier.size(25.dp),
-                    painter = painterResource(id = R.drawable.icon_xbox),
+                    painter = painterResource(
+                        id = if (viewModel.post.category == "PC") R.drawable.icon_pc
+                        else if (viewModel.post.category == "PS4") R.drawable.icon_ps4
+                        else if (viewModel.post.category == "XBOX") R.drawable.icon_xbox
+                        else if (viewModel.post.category == "NINTENDO") R.drawable.icon_nintendo
+                        else  R.drawable.icon_mobile
+
+                    ),
                     contentDescription = "")
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
-                    text = "Categoria",
+                    text = viewModel.post.category,
                     fontWeight = FontWeight.Bold,
                     fontSize = 17.sp
 
@@ -128,29 +153,17 @@ fun DetailPostContent() {
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
             text = "DESCRIPCION",
             fontWeight = FontWeight.Bold,
-            fontSize = 17.sp
+            fontSize = 17.sp,
+            color = Color.White
 
         )
 
         Text(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
-            text = "Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas \"Letraset\", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.",
-            fontSize = 14.sp
+            text = viewModel.post.description,
+            fontSize = 14.sp,
+            color = Color.White
 
         )
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PreviewContent() {
-    GamerAppTheme(darkTheme = true) {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colors.background
-        ) {
-          DetailPostContent()
-        }
     }
 }

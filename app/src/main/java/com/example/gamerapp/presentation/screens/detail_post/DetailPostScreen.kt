@@ -11,7 +11,7 @@ import com.example.gamerapp.presentation.screens.detail_post.components.DetailPo
 fun DetailPostScreen(navController: NavHostController, post: String) {
     Scaffold (
         content = {
-            DetailPostContent()
+            DetailPostContent(navController)
         }
     )
 }
