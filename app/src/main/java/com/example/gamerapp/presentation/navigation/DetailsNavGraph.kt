@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.example.gamerapp.presentation.screens.detail_post.DetailPostScreen
 import com.example.gamerapp.presentation.screens.new_post.NewPostScreen
 import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateScreen
+import com.example.gamerapp.presentation.screens.update_post.UpdatePostScreen
 
 fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
 
@@ -40,6 +41,16 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
                 DetailPostScreen(navController =  navController, post = post)
             }
         }
+        composable(
+            route = DetailsScreen.UpdatePost.route,
+            arguments = listOf(navArgument("post"){
+                type = NavType.StringType
+            })
+        ){
+            it.arguments?.getString("post")?.let { post ->
+                UpdatePostScreen(navController =  navController, post = post)
+            }
+        }
 
     }
 }
@@ -53,5 +64,8 @@ sealed class DetailsScreen(val route: String) {
     }
     object DetailPost: DetailsScreen( "posts/detail/{post}") {
         fun passPost(post: String) = "posts/detail/$post"
+    }
+    object UpdatePost: DetailsScreen( "posts/update/{post}") {
+        fun passPost(post: String) = "posts/update/$post"
     }
 }
