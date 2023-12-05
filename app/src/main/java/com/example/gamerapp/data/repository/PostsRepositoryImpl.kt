@@ -41,7 +41,7 @@ class PostsRepositoryImpl @Inject constructor(
 
                     idUserList.map { id->
                         async {
-                            val user = usersRef.document(id).get().await().toObject(User::class.java)!!
+                            val user = usersRef.document(id).get().await().toObject(User::class.java)
                             post.forEach { post ->
                                 if (post.idUser == id){
                                     post.user = user
@@ -59,6 +59,25 @@ class PostsRepositoryImpl @Inject constructor(
                 }
                 trySend(postResponse)
             }
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
+    override fun getPostsByUserId(idUsuer: String): Flow<Response<List<Post>>> = callbackFlow {
+        val snapshotListener = postsRef.whereEqualTo("idUser", idUsuer).addSnapshotListener { snapshot, e ->
+
+            val postResponse = if (snapshot != null){
+                val post = snapshot.toObjects(Post::class.java)
+
+                Response.Sucess(post)
+
+            }
+            else {
+                Response.Failure(e)
+            }
+            trySend(postResponse)
         }
         awaitClose {
             snapshotListener.remove()

@@ -75,35 +75,38 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                 )
             }
         }
-
-        Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 15.dp, horizontal = 20.dp)
-            ,
-            elevation = 4.dp,
-            shape = RoundedCornerShape(10.dp),
-        ) {
-            Row(modifier = Modifier.padding(vertical = 15.dp, horizontal = 15.dp)) {
-                AsyncImage(
-                    modifier = Modifier
-                        .size(55.dp)
-                        .clip(CircleShape),
-                    model = viewModel.post.user?.image ?: "",
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
-                )
-                Column(modifier = Modifier.padding(top = 7.dp, start = 20.dp)) {
-                    Text(
-                        text = viewModel.post.user?.username ?: "",
-                        fontSize = 13.sp
+        if (!viewModel.post.user?.username.isNullOrBlank()) {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 15.dp, horizontal = 20.dp)
+                ,
+                elevation = 4.dp,
+                shape = RoundedCornerShape(10.dp),
+            ) {
+                Row(modifier = Modifier.padding(vertical = 15.dp, horizontal = 15.dp)) {
+                    AsyncImage(
+                        modifier = Modifier
+                            .size(55.dp)
+                            .clip(CircleShape),
+                        model = viewModel.post.user?.image ?: "",
+                        contentDescription = "",
+                        contentScale = ContentScale.Crop
                     )
-                    Text(
-                        text = viewModel.post.user?.email ?: "",
-                        fontSize = 11.sp
-                    )
+                    Column(modifier = Modifier.padding(top = 7.dp, start = 20.dp)) {
+                        Text(
+                            text = viewModel.post.user?.username ?: "",
+                            fontSize = 13.sp
+                        )
+                        Text(
+                            text = viewModel.post.user?.email ?: "",
+                            fontSize = 11.sp
+                        )
+                    }
                 }
             }
+        }else {
+            Spacer(modifier = Modifier.height(15.dp))
         }
         Text(
             modifier = Modifier.padding(start = 20.dp, bottom = 15.dp),

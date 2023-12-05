@@ -10,5 +10,8 @@ interface PostsRepository {
     //TODO cuando se utiliza flow no se necesita utilizar suspend
     //TODO Listar los posts
     fun getPosts(): Flow<Response<List<Post>>>
+
+    //TODO Listar my posts
+    fun getPostsByUserId(idUsuer: String): Flow<Response<List<Post>>>
     suspend fun create(post: Post, file: File): Response<Boolean>
 }

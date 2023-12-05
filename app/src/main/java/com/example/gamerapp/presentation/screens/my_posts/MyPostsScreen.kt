@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.navigation.DetailsScreen
+import com.example.gamerapp.presentation.screens.my_posts.components.GetPostsByIdUser
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -21,7 +22,7 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 fun MyPostsScreen(navController: NavHostController) {
     Scaffold(
         content = {
-            Text(text = "MyPostsScreen")
+            GetPostsByIdUser(navController = navController)
         },
         floatingActionButton = {
             FloatingActionButton(
