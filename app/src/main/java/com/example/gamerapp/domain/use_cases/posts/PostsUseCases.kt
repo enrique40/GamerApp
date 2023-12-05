@@ -5,4 +5,5 @@ data class PostsUseCases(
     val getPosts: GetPosts,
     val getPostsByIdUser: GetPostsByIdUser,
     val deletePost: DeletePost,
+    val updatePost: UpdatePost,
 )

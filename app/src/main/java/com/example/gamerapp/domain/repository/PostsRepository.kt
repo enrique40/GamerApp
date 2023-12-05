@@ -14,5 +14,6 @@ interface PostsRepository {
     //TODO Listar my posts
     fun getPostsByUserId(idUsuer: String): Flow<Response<List<Post>>>
     suspend fun create(post: Post, file: File): Response<Boolean>
+    suspend fun update(post: Post, file: File?): Response<Boolean>
     suspend fun delete(idPost: String): Response<Boolean>
 }

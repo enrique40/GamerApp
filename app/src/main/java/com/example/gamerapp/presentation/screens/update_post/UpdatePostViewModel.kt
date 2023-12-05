@@ -39,7 +39,7 @@ class UpdatePostViewModel @Inject constructor(
     val data = savedStateHandle.get<String>("post")
     val post = Post.fromJson(data?: "")
     //RESPONSE
-    var createPostResponse by mutableStateOf<Response<Boolean>?>(null)
+    var updatePostResponse by mutableStateOf<Response<Boolean>?>(null)
         private set
 
     //USER SESSION
@@ -62,20 +62,22 @@ class UpdatePostViewModel @Inject constructor(
         )
     }
 
-    fun createPost(post: Post) = viewModelScope.launch {
-        createPostResponse = Response.Loading
-        val result = postsUseCases.create(post, file!!)
-        createPostResponse = result
+    fun updatePost(post: Post) = viewModelScope.launch {
+        updatePostResponse = Response.Loading
+        val result = postsUseCases.updatePost(post, file)
+        updatePostResponse = result
     }
 
-    fun onNewPost() {
+    fun onUpdatePost() {
         val post = Post(
+            id = post.id,
             name = state.name,
             description = state.description,
             category = state.category,
+            image = state.image,
             idUser = currentUser?.uid ?: "",
         )
-       createPost(post)
+       updatePost(post)
     }
     fun pickImage() = viewModelScope.launch {
         val result = resultingActivityHandler.getContent("image/*")
@@ -94,8 +96,8 @@ class UpdatePostViewModel @Inject constructor(
     }
 
     fun clearForm() {
-        state = state.copy(name = "", category = "", description = "", image = "")
-        createPostResponse = null
+       // state = state.copy(name = "", category = "", description = "", image = "")
+        updatePostResponse = null
 
     }
 

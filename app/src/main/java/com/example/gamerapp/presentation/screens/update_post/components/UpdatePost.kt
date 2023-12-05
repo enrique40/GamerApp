@@ -11,7 +11,7 @@ import com.example.gamerapp.presentation.screens.update_post.UpdatePostViewModel
 
 @Composable
 fun UpdatePost(viewModel: UpdatePostViewModel = hiltViewModel()) {
-    when (val resonse = viewModel.createPostResponse) {
+    when (val resonse = viewModel.updatePostResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {
             ProgressBar()
@@ -20,7 +20,7 @@ fun UpdatePost(viewModel: UpdatePostViewModel = hiltViewModel()) {
             viewModel.clearForm()
             Toast.makeText(
                 LocalContext.current,
-                "La publicacion se acreado correctamente",
+                "La publicacion se ha actulizado correctamente",
                 Toast.LENGTH_LONG
             ).show()
         }

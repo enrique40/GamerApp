@@ -12,6 +12,7 @@ import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTopBar
 import com.example.gamerapp.presentation.screens.new_post.components.NewPost
+import com.example.gamerapp.presentation.screens.update_post.components.UpdatePost
 import com.example.gamerapp.presentation.screens.update_post.components.UpdatePostContent
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -35,11 +36,11 @@ fun UpdatePostScreen(navController: NavHostController, post: String, viewModel: 
                     .padding(start = 7.dp, end = 7.dp),
                 text = "Actualizar",
                 onClick = {
-                    viewModel.onNewPost()
+                    viewModel.onUpdatePost()
                 }
             )
         }
     )
 
-    NewPost()
+    UpdatePost()
 }
