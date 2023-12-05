@@ -14,6 +14,7 @@ import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.example.gamerapp.domain.use_cases.posts.CreatePost
+import com.example.gamerapp.domain.use_cases.posts.DeletePost
 import com.example.gamerapp.domain.use_cases.posts.GetPosts
 import com.example.gamerapp.domain.use_cases.posts.GetPostsByIdUser
 import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
@@ -91,5 +92,6 @@ object AppModule {
         create = CreatePost(respository),
         getPosts = GetPosts(respository),
         getPostsByIdUser = GetPostsByIdUser(respository),
+        deletePost = DeletePost(respository),
     )
 }

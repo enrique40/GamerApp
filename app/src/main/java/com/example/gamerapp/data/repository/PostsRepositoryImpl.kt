@@ -70,7 +70,9 @@ class PostsRepositoryImpl @Inject constructor(
 
             val postResponse = if (snapshot != null){
                 val post = snapshot.toObjects(Post::class.java)
-
+                snapshot.documents.forEachIndexed { index,  document ->
+                    post[index].id = document.id
+                }
                 Response.Sucess(post)
 
             }
@@ -95,6 +97,16 @@ class PostsRepositoryImpl @Inject constructor(
             //DATA
             post.image = url.toString()
             postsRef.add(post).await()
+            Response.Sucess(true)
+        }catch (e: Exception) {
+            e.printStackTrace()
+            Response.Failure(e)
+        }
+    }
+
+    override suspend fun delete(idPost: String): Response<Boolean> {
+        return try {
+            postsRef.document(idPost).delete().await()
             Response.Sucess(true)
         }catch (e: Exception) {
             e.printStackTrace()

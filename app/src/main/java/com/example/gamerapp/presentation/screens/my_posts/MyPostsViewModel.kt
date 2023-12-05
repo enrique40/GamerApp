@@ -20,9 +20,16 @@ class MyPostsViewModel @Inject constructor(
 ) : ViewModel() {
 
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
+    var deleteResponse by mutableStateOf<Response<Boolean>?>(null)
     val currentUser = authUseCases.getCurrentUser()
     init {
         getPosts()
+    }
+
+    fun delete(idPost: String) = viewModelScope.launch {
+        deleteResponse = Response.Loading
+        val result = postsUseCases.deletePost(idPost)
+        deleteResponse = result
     }
     fun getPosts() = viewModelScope.launch {
         postsResponse = Response.Loading
