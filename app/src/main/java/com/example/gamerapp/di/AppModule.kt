@@ -14,9 +14,11 @@ import com.example.gamerapp.domain.use_cases.auth.Login
 import com.example.gamerapp.domain.use_cases.auth.Logout
 import com.example.gamerapp.domain.use_cases.auth.Signup
 import com.example.gamerapp.domain.use_cases.posts.CreatePost
+import com.example.gamerapp.domain.use_cases.posts.DeleteLikePost
 import com.example.gamerapp.domain.use_cases.posts.DeletePost
 import com.example.gamerapp.domain.use_cases.posts.GetPosts
 import com.example.gamerapp.domain.use_cases.posts.GetPostsByIdUser
+import com.example.gamerapp.domain.use_cases.posts.LikePost
 import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
 import com.example.gamerapp.domain.use_cases.posts.UpdatePost
 import com.example.gamerapp.domain.use_cases.users.Create
@@ -95,5 +97,7 @@ object AppModule {
         getPostsByIdUser = GetPostsByIdUser(respository),
         deletePost = DeletePost(respository),
         updatePost = UpdatePost(respository),
+        likePost = LikePost(respository),
+        deleteLikePost = DeleteLikePost(respository)
     )
 }

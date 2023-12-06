@@ -1,6 +1,5 @@
 package com.example.gamerapp.presentation.screens.posts.components
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
@@ -11,15 +10,14 @@ import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
 
 @Composable
-fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltViewModel()) {
-    Log.e("TAG", "GetPosts Loading -> ${Response.Loading}   Sucess ")
-    when (val response = viewModel.postsResponse) {
+fun LikePosts(viewModel: PostsViewModel = hiltViewModel()) {
+    when (val response = viewModel.likeResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {
             ProgressBar()
         }
         is Response.Sucess -> {
-            PostsContent(navController = navController, post = response.data)
+
         }
         is Response.Failure -> {
             Toast.makeText(

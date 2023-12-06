@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gamerapp.domain.model.Post
 import com.example.gamerapp.domain.model.Response
+import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.collect
@@ -15,13 +16,29 @@ import javax.inject.Inject
 
 @HiltViewModel
 class PostsViewModel @Inject constructor(
-    private val postsUseCases: PostsUseCases
+    private val postsUseCases: PostsUseCases,
+    private val authUseCases: AuthUseCases
 ) : ViewModel() {
 
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
-
+    var likeResponse by mutableStateOf<Response<Boolean>?>(null)
+    var deleteLikeResponse by mutableStateOf<Response<Boolean>?>(null)
+    var currentUser = authUseCases.getCurrentUser()
     init {
         getPosts()
+    }
+
+    fun like(idPost: String, idUser: String) = viewModelScope.launch {
+        likeResponse = Response.Loading
+        val result = postsUseCases.likePost(idPost = idPost, idUser = idUser)
+        likeResponse = result
+
+    }
+    fun deleteLike(idPost: String, idUser: String) = viewModelScope.launch {
+        deleteLikeResponse = Response.Loading
+        val result = postsUseCases.deleteLikePost(idPost = idPost, idUser = idUser)
+        deleteLikeResponse = result
+
     }
     fun getPosts() = viewModelScope.launch {
         postsResponse = Response.Loading

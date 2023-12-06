@@ -16,4 +16,6 @@ interface PostsRepository {
     suspend fun create(post: Post, file: File): Response<Boolean>
     suspend fun update(post: Post, file: File?): Response<Boolean>
     suspend fun delete(idPost: String): Response<Boolean>
+    suspend fun like(idPost: String, idUsuer: String): Response<Boolean>
+    suspend fun deleLike(idPost: String, idUsuer: String): Response<Boolean>
 }

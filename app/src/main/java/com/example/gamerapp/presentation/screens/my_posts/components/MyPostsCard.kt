@@ -59,7 +59,7 @@ fun MyPostsCard(navController: NavHostController, post: Post, viewModel: MyPosts
                 color = Color.Black
                 )
             Text(
-                modifier = Modifier.padding(horizontal = 15.dp, vertical = 7.dp),
+                modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 1.dp, bottom = 10.dp),
                 text = post.description,
                 fontSize = 13.sp,
                 maxLines = 2,
