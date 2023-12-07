@@ -21,6 +21,8 @@ class ProfileViewModel @Inject constructor(
 
     var userData by mutableStateOf(User())
         private set
+    var isDarkTheme by mutableStateOf(false)
+
 
     init {
         getUserById()
