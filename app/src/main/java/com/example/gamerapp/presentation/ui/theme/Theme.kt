@@ -16,18 +16,35 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
 
+
 private val DarkColorScheme = darkColorScheme(
+    primary = Color.Gray,
+    secondary = Red700,
+    onSecondary = Color.White,
+    onTertiary = Color.White,
+    background = Dargray900,
+    onPrimary = Color.White,
+    onSurface = Color.White
+)
+
+/*private val DarkColorScheme = darkColorScheme(
     primary = Red500,
     secondary = Red700,
     tertiary = Color.White,
     background = Dargray900,
     onPrimary = Color.White
-)
+)*/
 
 private val LightColorScheme = lightColorScheme(
-    primary = Red500,
+    primary = Color.Gray,
+    onSecondary = Color.Black,
     secondary = Red700,
-    tertiary = Dargray700,
+    onTertiary = Color.Black,
+    background = Color.Gray,
+    outline = Color.White,
+    onSurface = Color.Black,
+    onPrimary = Color.Black
+
 
 
     /* Other default colors to override
@@ -40,6 +57,23 @@ private val LightColorScheme = lightColorScheme(
     onSurface = Color(0xFF1C1B1F),
     */
 )
+
+/*private val LightColorScheme = lightColorScheme(
+    primary = Red500,
+    secondary = Red700,
+    tertiary = Dargray700,
+
+
+    *//* Other default colors to override
+    background = Color(0xFFFFFBFE),
+    surface = Color(0xFFFFFBFE),
+    onPrimary = Color.White,
+    onSecondary = Color.White,
+    onTertiary = Color.White,
+    onBackground = Color(0xFF1C1B1F),
+    onSurface = Color(0xFF1C1B1F),
+    *//*
+)*/
 
 @Composable
 fun GamerAppTheme(

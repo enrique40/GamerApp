@@ -7,6 +7,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,11 +25,11 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController()) {
+fun HomeScreen(navController: NavHostController = rememberNavController(), darkMode: MutableState<Boolean>) {
     Scaffold(
         bottomBar = { BottomBar(navController = navController)}
     ){
-        HomeBottonBarNavGraph(navController = navController)
+        HomeBottonBarNavGraph(navController = navController, darkMode = darkMode)
     }
 }
 

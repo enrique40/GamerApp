@@ -2,9 +2,7 @@ package com.example.gamerapp.presentation.screens.profile.components
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -21,11 +19,13 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -45,10 +45,10 @@ import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel()) {
+fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
 
     val activity = LocalContext.current as? Activity
-    var isDarkThemeIcon = remember { mutableStateOf(false) }
+    val isDarkThemeIcon = remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -93,27 +93,25 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             }
         }
         if (isDarkThemeIcon.value){
-            Log.e("TAG", "ProfileContent theme 1 ${isDarkThemeIcon.value}" )
             Image(modifier = Modifier
                 .size(40.dp)
                 .align(Alignment.End)
                 .padding(end = 10.dp, top = 10.dp)
                 .clickable {
-                    isDarkThemeIcon.value = false
-                    viewModel.isDarkTheme = false
-                },
+                    isDarkThemeIcon.value = !isDarkThemeIcon.value
+                    darkMode.value = !darkMode.value
+                }.rotate(46f),
                 painter = painterResource(id = R.drawable.baseline_mode_night_24),
                 contentDescription = "",
             )
         }else {
-            Log.e("TAG", "ProfileContent: theme 2 ${isDarkThemeIcon.value} " )
             Image(modifier = Modifier
                 .size(40.dp)
                 .align(Alignment.End)
                 .padding(end = 10.dp, top = 10.dp)
                 .clickable {
-                    isDarkThemeIcon.value = true
-                    viewModel.isDarkTheme = true
+                    isDarkThemeIcon.value = !isDarkThemeIcon.value
+                    darkMode.value = !darkMode.value
                 },
                 painter = painterResource(id = R.drawable.baseline_light_mode_24),
                 contentDescription = "",

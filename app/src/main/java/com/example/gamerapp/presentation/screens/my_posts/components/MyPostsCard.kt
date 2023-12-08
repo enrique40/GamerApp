@@ -69,7 +69,6 @@ fun MyPostsCard(
                     Text(
                         text = "Lorem Ipsum es simplemente el texto de",
                         fontWeight = FontWeight.Bold,
-                        color = Color.Black,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
                     )
@@ -81,7 +80,6 @@ fun MyPostsCard(
                         fontSize = 13.sp,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
-                        color = Color.Black,
 
                     )
                 }

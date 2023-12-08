@@ -1,16 +1,14 @@
 package com.example.gamerapp.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import com.example.gamerapp.presentation.screens.home.HomeScreen
-import com.example.gamerapp.presentation.screens.profile_update.ProfileUpdateScreen
 
 @Composable
-fun RootNavGraph(navController: NavHostController) {
+fun RootNavGraph(navController: NavHostController, darkMode: MutableState<Boolean>) {
     //Nota: para llamar a un NavHost dentro de otro se tiene que llamar dentro de un composable
     NavHost(
         navController = navController,
@@ -20,7 +18,7 @@ fun RootNavGraph(navController: NavHostController) {
 
         authNavGraph(navController = navController)
         composable(route = Graph.HOME) {
-            HomeScreen()
+            HomeScreen(darkMode = darkMode)
         }
     }
 }

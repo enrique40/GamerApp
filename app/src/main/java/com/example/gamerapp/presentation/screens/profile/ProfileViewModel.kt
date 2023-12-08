@@ -10,6 +10,10 @@ import com.example.gamerapp.domain.model.User
 import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.users.UsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +25,6 @@ class ProfileViewModel @Inject constructor(
 
     var userData by mutableStateOf(User())
         private set
-    var isDarkTheme by mutableStateOf(false)
 
 
     init {
