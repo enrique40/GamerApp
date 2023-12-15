@@ -19,12 +19,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -50,7 +52,7 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
         .verticalScroll(rememberScrollState())) {
         Box {
             Card(
-                shape = RoundedCornerShape(bottomEndPercent = 9, bottomStartPercent = 9)
+                shape = RoundedCornerShape(bottomEndPercent = 5, bottomStartPercent = 5)
             ) {
                 AsyncImage(
                     modifier = Modifier
@@ -60,14 +62,25 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                     contentDescription = "",
                     contentScale = ContentScale.Crop
                 )
-                IconButton(onClick = { navController.popBackStack() }) {
+                FloatingActionButton(
+                    modifier = Modifier.padding(top = 10.dp, start = 25.dp).size(45.dp),
+                    onClick = { navController.popBackStack() },
+                    shape = RoundedCornerShape(12.dp),
+                    backgroundColor = Red500) {
+                    Image(
+                        modifier = Modifier.align(Alignment.Center).padding(start = 5.dp),
+                        painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
+                        contentDescription = ""
+                    )
+                }
+                /*IconButton(onClick = { navController.popBackStack() }) {
                     Icon(
                         modifier = Modifier.size(35.dp),
                         imageVector = Icons.Default.ArrowBack,
                         contentDescription = "",
                         tint = Color.White
                     )
-                }
+                }*/
             }
 
         }
