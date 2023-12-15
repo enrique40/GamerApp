@@ -2,14 +2,12 @@ package com.example.gamerapp.presentation.screens.detail_post.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,8 +19,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Card
 import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -35,18 +31,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
-import coil.compose.AsyncImagePainter.State.Empty.painter
 import com.example.gamerapp.R
-import com.example.gamerapp.presentation.navigation.RootNavGraph
 import com.example.gamerapp.presentation.screens.detail_post.DetailPostViewModel
-import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @Composable
@@ -57,23 +48,28 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
         .fillMaxHeight()
         .background(Color.Black)
         .verticalScroll(rememberScrollState())) {
-        Box() {
-            AsyncImage(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp),
-                model = viewModel.post.image,
-                contentDescription = "",
-                contentScale = ContentScale.Crop
-            )
-            IconButton(onClick = { navController?.popBackStack() }) {
-                Icon(
-                    modifier = Modifier.size(35.dp),
-                    imageVector = Icons.Default.ArrowBack,
+        Box {
+            Card(
+                shape = RoundedCornerShape(bottomEndPercent = 9, bottomStartPercent = 9)
+            ) {
+                AsyncImage(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp),
+                    model = viewModel.post.image,
                     contentDescription = "",
-                    tint = Color.White
+                    contentScale = ContentScale.Crop
                 )
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        modifier = Modifier.size(35.dp),
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "",
+                        tint = Color.White
+                    )
+                }
             }
+
         }
         if (!viewModel.post.user?.username.isNullOrBlank()) {
             Card(
@@ -129,11 +125,13 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                 Image(
                     modifier = Modifier.size(25.dp),
                     painter = painterResource(
-                        id = if (viewModel.post.category == "PC") R.drawable.icon_pc
-                        else if (viewModel.post.category == "PS4") R.drawable.icon_ps4
-                        else if (viewModel.post.category == "XBOX") R.drawable.icon_xbox
-                        else if (viewModel.post.category == "NINTENDO") R.drawable.icon_nintendo
-                        else  R.drawable.icon_mobile
+                        id = when (viewModel.post.category) {
+                            "PC" -> R.drawable.icon_pc
+                            "PS4" -> R.drawable.icon_ps4
+                            "XBOX" -> R.drawable.icon_xbox
+                            "NINTENDO" -> R.drawable.icon_nintendo
+                            else -> R.drawable.icon_mobile
+                        }
 
                     ),
                     contentDescription = "")
