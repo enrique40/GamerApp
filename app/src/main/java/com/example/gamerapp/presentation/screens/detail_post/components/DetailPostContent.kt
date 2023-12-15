@@ -21,10 +21,6 @@ import androidx.compose.material.Card
 import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -171,7 +167,6 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
             color = Color.White
 
         )
-
         Text(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
             text = viewModel.post.description,
