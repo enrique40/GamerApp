@@ -32,7 +32,7 @@ fun NewPostScreen(navController: NavHostController, viewModel: NewPostViewModel 
             DefaultButtom(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 7.dp, end = 7.dp),
+                    .padding(start = 7.dp, end = 7.dp, bottom = 2.dp),
                 text = "PUBLICAR",
                 onClick = {
                     viewModel.onNewPost()

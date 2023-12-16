@@ -17,7 +17,7 @@ fun PostsContent(
 ) {
    LazyColumn(
        modifier = Modifier.fillMaxWidth()
-           .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 55.dp)
+           .padding(start = 20.dp, end = 20.dp, top = 20.dp, bottom = 80.dp)
    ) {
        items(
            items = post
