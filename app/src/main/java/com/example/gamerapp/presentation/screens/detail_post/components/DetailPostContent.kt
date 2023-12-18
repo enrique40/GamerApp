@@ -39,53 +39,58 @@ import com.example.gamerapp.presentation.screens.detail_post.DetailPostViewModel
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @Composable
-fun DetailPostContent(navController: NavHostController, viewModel: DetailPostViewModel = hiltViewModel()) {
+fun DetailPostContent(
+    navController: NavHostController,
+    viewModel: DetailPostViewModel = hiltViewModel()
+) {
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-        .background(Color.Black)
-        .verticalScroll(rememberScrollState())) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
+            .background(Color.Black)
+    ) {
         Box {
-            Card(
-                shape = RoundedCornerShape(bottomEndPercent = 5, bottomStartPercent = 5)
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                model = viewModel.post.image,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
+            FloatingActionButton(
+                modifier = Modifier
+                    .padding(top = 10.dp, start = 19.dp)
+                    .size(45.dp),
+                onClick = { navController.popBackStack() },
+                shape = RoundedCornerShape(12.dp),
+                backgroundColor = Red500
             ) {
-                AsyncImage(
+                Image(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp),
-                    model = viewModel.post.image,
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
+                        .align(Alignment.Center)
+                        .padding(start = 5.dp),
+                    painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
+                    contentDescription = ""
                 )
-                FloatingActionButton(
-                    modifier = Modifier.padding(top = 10.dp, start = 25.dp).size(45.dp),
-                    onClick = { navController.popBackStack() },
-                    shape = RoundedCornerShape(12.dp),
-                    backgroundColor = Red500) {
-                    Image(
-                        modifier = Modifier.align(Alignment.Center).padding(start = 5.dp),
-                        painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
-                        contentDescription = ""
-                    )
-                }
-                /*IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        modifier = Modifier.size(35.dp),
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }*/
             }
+            /*IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    modifier = Modifier.size(35.dp),
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }*/
+
 
         }
         if (!viewModel.post.user?.username.isNullOrBlank()) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 15.dp, horizontal = 20.dp)
-                ,
+                    .padding(vertical = 15.dp, horizontal = 20.dp),
                 elevation = 4.dp,
                 shape = RoundedCornerShape(10.dp),
             ) {
@@ -110,7 +115,7 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                     }
                 }
             }
-        }else {
+        } else {
             Spacer(modifier = Modifier.height(15.dp))
         }
         Text(
@@ -143,7 +148,8 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                         }
 
                     ),
-                    contentDescription = "")
+                    contentDescription = ""
+                )
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = viewModel.post.category,
@@ -167,12 +173,17 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
             color = Color.White
 
         )
-        Text(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
-            text = viewModel.post.description,
-            fontSize = 14.sp,
-            color = Color.White
+        Column( modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())) {
+            Text(
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
+                text = viewModel.post.description,
+                fontSize = 14.sp,
+                color = Color.White
 
-        )
+            )
+        }
+
     }
 }
