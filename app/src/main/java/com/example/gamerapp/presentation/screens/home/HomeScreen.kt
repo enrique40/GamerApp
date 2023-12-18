@@ -6,12 +6,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemColors
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -83,6 +86,13 @@ fun RowScope.AddItem(
                    contentDescription = "Navigation icon"
                 )
         },
+        colors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.Gray,
+            unselectedIconColor = Color.Gray,
+            selectedTextColor = Color.Gray,
+            unselectedTextColor = Color.Gray,
+            indicatorColor = Color.Gray
+        ),
         selected = currenDestination?.hierarchy?.any {
            it.route == screen.route
         } == true,

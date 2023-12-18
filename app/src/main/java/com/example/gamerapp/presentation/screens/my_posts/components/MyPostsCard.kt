@@ -13,6 +13,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -47,7 +48,11 @@ fun MyPostsCard(
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = Color.LightGray
+        backgroundColor = if (MaterialTheme.colors.isLight) {
+            Color.White
+        } else {
+            Color.Gray
+        },
     ) {
         Column() {
             AsyncImage(
@@ -67,19 +72,19 @@ fun MyPostsCard(
                     .padding(start = 10.dp, top = 10.dp, end = 5.dp)
                 ) {
                     Text(
-                        text = "Lorem Ipsum es simplemente el texto de",
+                        text = post.name,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.Black
                     )
                     Text(
                         modifier = Modifier.padding(top = 10.dp),
-                        text = "Lorem Ipsum es simplemente sdfsd" +
-                                "sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfs" +
-                                "sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd",
+                        text = post.description,
                         fontSize = 13.sp,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
+                        color = Color.Black
 
                     )
                 }

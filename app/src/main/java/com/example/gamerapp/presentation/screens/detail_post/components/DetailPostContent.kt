@@ -48,7 +48,7 @@ fun DetailPostContent(
         modifier = Modifier
             .fillMaxWidth()
             .fillMaxHeight()
-            .background(Color.Black)
+
     ) {
         Box {
             AsyncImage(
@@ -61,7 +61,7 @@ fun DetailPostContent(
             )
             FloatingActionButton(
                 modifier = Modifier
-                    .padding(top = 10.dp, start = 19.dp)
+                    .padding(top = 10.dp, start = 20.dp)
                     .size(45.dp),
                 onClick = { navController.popBackStack() },
                 shape = RoundedCornerShape(12.dp),
@@ -163,7 +163,7 @@ fun DetailPostContent(
             modifier = Modifier.padding(end = 20.dp, top = 10.dp, bottom = 10.dp),
             startIndent = 20.dp,
             thickness = 1.dp,
-            color = Color.DarkGray
+            color = Color.Gray
         )
         Text(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
@@ -180,7 +180,6 @@ fun DetailPostContent(
                 modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
                 text = viewModel.post.description,
                 fontSize = 14.sp,
-                color = Color.White
 
             )
         }

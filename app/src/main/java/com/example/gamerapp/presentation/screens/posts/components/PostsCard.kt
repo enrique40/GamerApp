@@ -37,7 +37,6 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = Color.LightGray
     ) {
         Column() {
             AsyncImage(
@@ -59,14 +58,12 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
                 text = post.user?.username ?: "",
                 fontSize = 12.sp,
-                color = Color.Black
             )
             Text(
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 0.dp, bottom = 10.dp),
                 text = post.description,
                 fontSize = 13.sp,
                 maxLines = 2,
-                color = Color.Black
             )
             Row(
                 modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)
