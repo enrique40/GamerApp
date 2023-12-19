@@ -21,12 +21,8 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private lateinit var navController: NavHostController
-    //private lateinit var viewModel: ProfileViewModel
-    private val viewModel: ProfileViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //viewModel = ViewModelProvider(this).get(ProfileViewModel::class.java)
         setContent {
             val darkMode = remember {  mutableStateOf(false) }
             GamerAppTheme(darkTheme = darkMode.value) {

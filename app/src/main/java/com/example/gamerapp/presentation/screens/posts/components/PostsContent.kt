@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -13,7 +14,8 @@ import com.example.gamerapp.domain.model.Post
 @Composable
 fun PostsContent(
     navController: NavHostController,
-    post: List<Post>
+    post: List<Post>,
+    darkMode: MutableState<Boolean>
 ) {
    LazyColumn(
        modifier = Modifier.fillMaxWidth()
@@ -22,7 +24,7 @@ fun PostsContent(
        items(
            items = post
        ) { post->
-           PostsCard(navController =  navController, post = post)
+           PostsCard(navController =  navController, post = post, darkMode = darkMode)
        }
    }
 }

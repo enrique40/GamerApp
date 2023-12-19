@@ -3,6 +3,7 @@ package com.example.gamerapp.presentation.screens.posts.components
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -11,7 +12,7 @@ import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
 
 @Composable
-fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltViewModel()) {
+fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
     Log.e("TAG", "GetPosts Loading -> ${Response.Loading}   Sucess ")
     when (val response = viewModel.postsResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
@@ -19,7 +20,7 @@ fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltV
             ProgressBar()
         }
         is Response.Sucess -> {
-            PostsContent(navController = navController, post = response.data)
+            PostsContent(navController = navController, post = response.data, darkMode)
         }
         is Response.Failure -> {
             Toast.makeText(

@@ -2,6 +2,7 @@ package com.example.gamerapp.presentation.screens.profile.components
 
 import android.app.Activity
 import android.content.Intent
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -93,14 +94,17 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
             }
         }
         if (isDarkThemeIcon.value){
-            Image(modifier = Modifier
-                .size(40.dp)
-                .align(Alignment.End)
-                .padding(end = 10.dp, top = 10.dp)
-                .clickable {
-                    isDarkThemeIcon.value = !isDarkThemeIcon.value
-                    darkMode.value = !darkMode.value
-                }.rotate(46f),
+            Image(
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.End)
+                    .padding(end = 10.dp, top = 10.dp)
+                    .clickable {
+                        Log.e("TAG", "ProfileContent 1 ${isDarkThemeIcon.value} " )
+                        isDarkThemeIcon.value = !isDarkThemeIcon.value
+                        darkMode.value = !darkMode.value
+                    }
+                    .rotate(46f),
                 painter = painterResource(id = R.drawable.baseline_mode_night_24),
                 contentDescription = "",
             )

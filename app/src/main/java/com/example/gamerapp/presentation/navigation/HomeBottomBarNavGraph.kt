@@ -24,10 +24,10 @@ fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: MutableSt
     ) {
 
         composable(route = HomeBottomBarScreen.Posts.route){
-            PostsScreen(navController)
+            PostsScreen(navController, darkMode)
         }
         composable(route = HomeBottomBarScreen.MyPosts.route){
-            MyPostsScreen(navController)
+            MyPostsScreen(navController, darkMode)
         }
         composable(route = HomeBottomBarScreen.Profile.route){
             ProfileScreen(navController, darkMode)

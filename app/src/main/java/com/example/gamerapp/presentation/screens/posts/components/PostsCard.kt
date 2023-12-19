@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -28,7 +29,7 @@ import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
 
 @Composable
-fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel()) {
+fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
     Card(
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
@@ -37,8 +38,13 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
+        backgroundColor = if (darkMode.value) {
+            Color.LightGray
+        } else {
+            Color.White
+        },
     ) {
-        Column() {
+        Column {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -58,12 +64,14 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
                 modifier = Modifier.padding(horizontal = 15.dp, vertical = 5.dp),
                 text = post.user?.username ?: "",
                 fontSize = 12.sp,
+                color = Color.Black
             )
             Text(
                 modifier = Modifier.padding(start = 15.dp, end = 15.dp, top = 0.dp, bottom = 10.dp),
                 text = post.description,
                 fontSize = 13.sp,
                 maxLines = 2,
+                color = Color.Black
             )
             Row(
                 modifier = Modifier.padding(start = 15.dp, bottom = 15.dp)

@@ -1,6 +1,5 @@
 package com.example.gamerapp.presentation.screens.my_posts.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,13 +12,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -38,7 +36,8 @@ import com.example.gamerapp.presentation.screens.my_posts.MyPostsViewModel
 fun MyPostsCard(
     navController: NavHostController,
     post: Post,
-    viewModel: MyPostsViewModel = hiltViewModel()
+    viewModel: MyPostsViewModel = hiltViewModel(),
+    darkMode: MutableState<Boolean>
 ) {
     Card(
         modifier = Modifier
@@ -48,13 +47,13 @@ fun MyPostsCard(
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = if (MaterialTheme.colors.isLight) {
-            Color.White
+        backgroundColor = if (darkMode.value) {
+            Color.LightGray
         } else {
-            Color.Gray
+            Color.White
         },
     ) {
-        Column() {
+        Column {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()

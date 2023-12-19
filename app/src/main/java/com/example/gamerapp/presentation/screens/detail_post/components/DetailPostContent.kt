@@ -1,7 +1,7 @@
 package com.example.gamerapp.presentation.screens.detail_post.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +22,7 @@ import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,13 +37,16 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.gamerapp.R
 import com.example.gamerapp.presentation.screens.detail_post.DetailPostViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @Composable
 fun DetailPostContent(
     navController: NavHostController,
-    viewModel: DetailPostViewModel = hiltViewModel()
+    viewModel: DetailPostViewModel = hiltViewModel(),
+    viewModelP: ProfileViewModel = hiltViewModel()
 ) {
+    Log.e("TAG", "DetailPostContent ${ viewModelP.myFlow.collectAsState()}" )
 
     Column(
         modifier = Modifier

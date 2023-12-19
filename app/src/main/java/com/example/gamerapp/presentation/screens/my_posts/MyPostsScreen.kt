@@ -8,6 +8,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -17,10 +18,10 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyPostsScreen(navController: NavHostController) {
+fun MyPostsScreen(navController: NavHostController, darkMode: MutableState<Boolean>) {
     Scaffold(
         content = {
-            GetPostsByIdUser(navController = navController)
+            GetPostsByIdUser(navController = navController, darkMode = darkMode)
         },
         floatingActionButton = {
             FloatingActionButton(
