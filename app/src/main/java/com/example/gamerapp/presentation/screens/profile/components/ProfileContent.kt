@@ -53,7 +53,7 @@ import kotlinx.coroutines.launch
 
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), darkMode: Boolean) {
+fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel()) {
 
     val activity = LocalContext.current as? Activity
     var isDarkThemeIcon = remember { mutableStateOf(false) }
@@ -118,7 +118,6 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                     .clickable {
                         Log.e("TAG", "ProfileContent 1 ${isDarkThemeIcon.value} ")
                         isDarkThemeIcon.value = !isDarkThemeIcon.value
-                       // darkMode = !darkMode
                         CoroutineScope(IO).launch {
                             viewModel.saveToDataStore(isDarkThemeIcon.value)
                         }
@@ -135,7 +134,6 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                 .padding(end = 10.dp, top = 10.dp)
                 .clickable {
                     isDarkThemeIcon.value = !isDarkThemeIcon.value
-                    //darkMode = !darkMode
                     CoroutineScope(IO).launch {
                         viewModel.saveToDataStore(isDarkThemeIcon.value)
                     }

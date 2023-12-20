@@ -9,11 +9,11 @@ import com.example.gamerapp.presentation.screens.profile.components.ProfileConte
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun ProfileScreen(navController: NavHostController, darkMode: Boolean) {
+fun ProfileScreen(navController: NavHostController) {
     Scaffold(
         topBar = {},
         content = {
-            ProfileContent(navController, darkMode = darkMode)
+            ProfileContent(navController)
         },
         bottomBar = {}
     )

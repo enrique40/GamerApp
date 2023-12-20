@@ -30,7 +30,7 @@ fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: Boolean) 
             MyPostsScreen(navController, darkMode)
         }
         composable(route = HomeBottomBarScreen.Profile.route){
-            ProfileScreen(navController, darkMode)
+            ProfileScreen(navController)
         }
 
         detailsNavGraph(navController)
