@@ -27,7 +27,7 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun HomeScreen(navController: NavHostController = rememberNavController(), darkMode: MutableState<Boolean>) {
+fun HomeScreen(navController: NavHostController = rememberNavController(), darkMode: Boolean) {
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)

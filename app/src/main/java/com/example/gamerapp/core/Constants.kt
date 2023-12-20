@@ -9,6 +9,4 @@ object Constants {
 
     const val USERS = "Users"
     const val POSTS = "Posts"
-    val Context.DataStoree: DataStore<Preferences> by preferencesDataStore(name = "sd")
-
 }

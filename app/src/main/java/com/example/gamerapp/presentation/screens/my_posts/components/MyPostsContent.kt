@@ -15,7 +15,7 @@ import com.example.gamerapp.domain.model.Post
 fun MyPostsContent(
     navController: NavHostController,
     post: List<Post>,
-    darkMode: MutableState<Boolean>
+    darkMode: Boolean
 ) {
    LazyColumn(
        modifier = Modifier.fillMaxWidth()

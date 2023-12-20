@@ -12,7 +12,7 @@ import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
 
 @Composable
-fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
+fun GetPosts(navController: NavHostController, viewModel: PostsViewModel = hiltViewModel(), darkMode: Boolean) {
     Log.e("TAG", "GetPosts Loading -> ${Response.Loading}   Sucess ")
     when (val response = viewModel.postsResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO

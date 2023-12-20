@@ -11,7 +11,7 @@ import com.example.gamerapp.presentation.components.ProgressBar
 import com.example.gamerapp.presentation.screens.my_posts.MyPostsViewModel
 
 @Composable
-fun GetPostsByIdUser(navController: NavHostController, viewModel: MyPostsViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
+fun GetPostsByIdUser(navController: NavHostController, viewModel: MyPostsViewModel = hiltViewModel(), darkMode: Boolean) {
     when (val response = viewModel.postsResponse) {
         // MOSTRAR QUE SE ESTA REALIZANDO LA PETICION Y TODAVIA ESTA EN PROCESO
         Response.Loading -> {

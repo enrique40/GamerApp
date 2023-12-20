@@ -18,7 +18,7 @@ import com.example.gamerapp.presentation.ui.theme.Red500
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MyPostsScreen(navController: NavHostController, darkMode: MutableState<Boolean>) {
+fun MyPostsScreen(navController: NavHostController, darkMode: Boolean) {
     Scaffold(
         content = {
             GetPostsByIdUser(navController = navController, darkMode = darkMode)

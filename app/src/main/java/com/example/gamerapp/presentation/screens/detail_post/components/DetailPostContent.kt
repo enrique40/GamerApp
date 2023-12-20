@@ -22,7 +22,13 @@ import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -46,8 +52,16 @@ fun DetailPostContent(
     viewModel: DetailPostViewModel = hiltViewModel(),
     viewModelP: ProfileViewModel = hiltViewModel()
 ) {
-    Log.e("TAG", "DetailPostContent ${ viewModelP.myFlow.collectAsState()}" )
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            // Haz algo con los datos aquí
+            Log.e("", "DetailPostContent 1 $data" )
+            newData = data
+        }
+    }
 
+    //Log.e("TAG", "DetailPostContent 2 - $newData")
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -97,6 +111,7 @@ fun DetailPostContent(
                     .padding(vertical = 15.dp, horizontal = 20.dp),
                 elevation = 4.dp,
                 shape = RoundedCornerShape(10.dp),
+                backgroundColor = if (newData) Color.Gray else Color.White
             ) {
                 Row(modifier = Modifier.padding(vertical = 15.dp, horizontal = 15.dp)) {
                     AsyncImage(

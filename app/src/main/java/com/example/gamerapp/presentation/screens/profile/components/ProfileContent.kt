@@ -20,6 +20,7 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -43,13 +45,27 @@ import com.example.gamerapp.presentation.MainActivity
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
+import com.example.gamerapp.presentation.screens.profile.UserPreferencesRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
+fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), darkMode: Boolean) {
 
     val activity = LocalContext.current as? Activity
-    val isDarkThemeIcon = remember { mutableStateOf(false) }
+    var isDarkThemeIcon = remember { mutableStateOf(false) }
+   /* LaunchedEffect(Unit) {
+        userPreferencesRepository.dataStore.data.map { settings ->
+            settings[booleanPreferencesKey("themaa")] ?: false
+        }.collect { dataFromDataStore ->
+           // darkMode = dataFromDataStore
+            // Usa el valor de dataFromDataStore aquí
+            Log.e("TAG", "onCreate -$dataFromDataStore")
+        }
+    }*/
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -100,9 +116,13 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                     .align(Alignment.End)
                     .padding(end = 10.dp, top = 10.dp)
                     .clickable {
-                        Log.e("TAG", "ProfileContent 1 ${isDarkThemeIcon.value} " )
+                        Log.e("TAG", "ProfileContent 1 ${isDarkThemeIcon.value} ")
                         isDarkThemeIcon.value = !isDarkThemeIcon.value
-                        darkMode.value = !darkMode.value
+                       // darkMode = !darkMode
+                        CoroutineScope(IO).launch {
+                            viewModel.saveToDataStore(isDarkThemeIcon.value)
+                        }
+
                     }
                     .rotate(46f),
                 painter = painterResource(id = R.drawable.baseline_mode_night_24),
@@ -115,7 +135,10 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                 .padding(end = 10.dp, top = 10.dp)
                 .clickable {
                     isDarkThemeIcon.value = !isDarkThemeIcon.value
-                    darkMode.value = !darkMode.value
+                    //darkMode = !darkMode
+                    CoroutineScope(IO).launch {
+                        viewModel.saveToDataStore(isDarkThemeIcon.value)
+                    }
                 },
                 painter = painterResource(id = R.drawable.baseline_light_mode_24),
                 contentDescription = "",

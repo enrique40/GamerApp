@@ -9,6 +9,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.gamerapp.domain.model.User
@@ -17,7 +18,9 @@ import com.example.gamerapp.domain.use_cases.users.UsersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,7 +28,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(
     private val authUseCases: AuthUseCases,
     private val usersUseCase: UsersUseCase,
-    @ApplicationContext private val context: Context,
+    private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
     var userData by mutableStateOf(User())
@@ -46,15 +49,19 @@ class ProfileViewModel @Inject constructor(
         authUseCases.logout()
     }
 
-   /* suspend fun saveToDataStore(value: Boolean) {
-        dataStore.edit { settings ->
-            settings[booleanPreferencesKey("thema")] = value
+     suspend fun saveToDataStore(value: Boolean) {
+        userPreferencesRepository.dataStore.edit { settings ->
+            settings[booleanPreferencesKey("themaa")] = value
         }
     }
 
     // Flujo para recuperar el valor del DataStore
-    val dataFromDataStore: Flow<Boolean> = dataStore.data.map { settings ->
-        settings[booleanPreferencesKey("thema")] ?: false
-    }*/
+    val dataFromDataStore: Flow<Boolean> = userPreferencesRepository.dataStore.data.map { settings ->
+        settings[booleanPreferencesKey("themaa")] ?: false
+    }.stateIn(
+        viewModelScope,
+        SharingStarted.WhileSubscribed(),
+        true
+    )
 
 }

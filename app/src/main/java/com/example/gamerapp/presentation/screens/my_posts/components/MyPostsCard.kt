@@ -37,7 +37,7 @@ fun MyPostsCard(
     navController: NavHostController,
     post: Post,
     viewModel: MyPostsViewModel = hiltViewModel(),
-    darkMode: MutableState<Boolean>
+    darkMode: Boolean
 ) {
     Card(
         modifier = Modifier
@@ -47,7 +47,7 @@ fun MyPostsCard(
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = if (darkMode.value) {
+        backgroundColor = if (darkMode) {
             Color.LightGray
         } else {
             Color.White

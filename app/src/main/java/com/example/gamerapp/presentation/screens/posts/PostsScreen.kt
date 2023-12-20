@@ -11,7 +11,7 @@ import com.example.gamerapp.presentation.screens.posts.components.LikePosts
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun PostsScreen(navController: NavHostController,  darkMode: MutableState<Boolean>) {
+fun PostsScreen(navController: NavHostController,  darkMode: Boolean) {
     Scaffold(
         content = {
             GetPosts(navController, darkMode = darkMode)

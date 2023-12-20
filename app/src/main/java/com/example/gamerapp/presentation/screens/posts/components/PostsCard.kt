@@ -29,7 +29,7 @@ import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
 
 @Composable
-fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
+fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel(), darkMode: Boolean) {
     Card(
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
@@ -38,7 +38,7 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = if (darkMode.value) {
+        backgroundColor = if (darkMode) {
             Color.LightGray
         } else {
             Color.White

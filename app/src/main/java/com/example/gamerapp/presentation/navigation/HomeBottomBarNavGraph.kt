@@ -15,7 +15,7 @@ import com.example.gamerapp.presentation.screens.posts.PostsScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileScreen
 
 @Composable
-fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: MutableState<Boolean>) {
+fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: Boolean) {
     //startDestination para identificar la ruta inicial
     NavHost(
         navController = navController,
