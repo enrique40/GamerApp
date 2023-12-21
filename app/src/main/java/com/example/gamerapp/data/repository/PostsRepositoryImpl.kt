@@ -1,5 +1,6 @@
 package com.example.gamerapp.data.repository
 
+import android.net.Uri
 import com.example.gamerapp.core.Constants.POSTS
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Post
@@ -94,16 +95,18 @@ class PostsRepositoryImpl @Inject constructor(
     }
 
     override suspend fun create(post: Post, file: File): Response<Boolean> {
-       return try {
-            //IMAGE
+        return try {
+            // IMAGE
+            val fromFile = Uri.fromFile(file)
             val ref = storagePostRef.child(file.name)
+            ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
 
-            //DATA
+            // DATA
             post.image = url.toString()
             postsRef.add(post).await()
             Response.Sucess(true)
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             e.printStackTrace()
             Response.Failure(e)
         }
@@ -113,7 +116,9 @@ class PostsRepositoryImpl @Inject constructor(
         return try {
             //IMAGE
             if (file != null) {
+                val fromFile = Uri.fromFile(file)
                 val ref = storagePostRef.child(file.name)
+                ref.putFile(fromFile).await()
                 val url = ref.downloadUrl.await()
                 post.image = url.toString()
             }

@@ -1,5 +1,6 @@
 package com.example.gamerapp.data.repository
 
+import android.net.Uri
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.domain.model.User
@@ -44,7 +45,9 @@ class UsersRepositoryImpl @Inject constructor(
 
     override suspend fun saveImage(file: File): Response<String> {
         return try {
+            val fromFile = Uri.fromFile(file)
             val ref = storageUsersRef.child(file.name)
+            ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
             return Response.Sucess(url.toString())
         }
