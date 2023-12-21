@@ -19,9 +19,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -42,13 +44,23 @@ import com.example.gamerapp.presentation.MainActivity
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.launch
 
 
 @Composable
-fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), darkMode: MutableState<Boolean>) {
+fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel = hiltViewModel(), viewModelP: ProfileViewModel = hiltViewModel()) {
 
     val activity = LocalContext.current as? Activity
     val isDarkThemeIcon = remember { mutableStateOf(false) }
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            // Haz algo con los datos aquí
+            newData = data
+        }
+    }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -92,15 +104,20 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                 }
             }
         }
-        if (isDarkThemeIcon.value){
-            Image(modifier = Modifier
-                .size(40.dp)
-                .align(Alignment.End)
-                .padding(end = 10.dp, top = 10.dp)
-                .clickable {
-                    isDarkThemeIcon.value = !isDarkThemeIcon.value
-                    darkMode.value = !darkMode.value
-                }.rotate(46f),
+        if (newData){
+            Image(
+                modifier = Modifier
+                    .size(40.dp)
+                    .align(Alignment.End)
+                    .padding(end = 10.dp, top = 10.dp)
+                    .clickable {
+                        isDarkThemeIcon.value = !isDarkThemeIcon.value
+                        CoroutineScope(IO).launch {
+                            viewModel.saveToDataStore(isDarkThemeIcon.value)
+                        }
+
+                    }
+                    .rotate(46f),
                 painter = painterResource(id = R.drawable.baseline_mode_night_24),
                 contentDescription = "",
             )
@@ -111,7 +128,9 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                 .padding(end = 10.dp, top = 10.dp)
                 .clickable {
                     isDarkThemeIcon.value = !isDarkThemeIcon.value
-                    darkMode.value = !darkMode.value
+                    CoroutineScope(IO).launch {
+                        viewModel.saveToDataStore(isDarkThemeIcon.value)
+                    }
                 },
                 painter = painterResource(id = R.drawable.baseline_light_mode_24),
                 contentDescription = "",

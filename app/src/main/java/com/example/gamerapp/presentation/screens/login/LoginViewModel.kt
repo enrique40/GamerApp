@@ -1,6 +1,5 @@
 package com.example.gamerapp.presentation.screens.login
 
-import android.util.Log
 import android.util.Patterns
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,10 +34,8 @@ class LoginViewModel @Inject constructor(private val authUseCase: AuthUseCases):
 
 
     init {
-        Log.e("TAG", " loginViewModel")
         if (authUseCase.getCurrentUser() != null){ //SESION INICIADA
             loginResponse = Response.Sucess(authUseCase.getCurrentUser()!!)
-            Log.e("TAG", " loginViewModel 1 --${loginResponse}")
         }
     }
 

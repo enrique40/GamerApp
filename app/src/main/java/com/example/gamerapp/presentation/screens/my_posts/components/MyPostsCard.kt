@@ -1,6 +1,5 @@
 package com.example.gamerapp.presentation.screens.my_posts.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -18,7 +17,11 @@ import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -32,13 +35,22 @@ import coil.compose.AsyncImage
 import com.example.gamerapp.domain.model.Post
 import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.my_posts.MyPostsViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 
 @Composable
 fun MyPostsCard(
     navController: NavHostController,
     post: Post,
-    viewModel: MyPostsViewModel = hiltViewModel()
+    viewModel: MyPostsViewModel = hiltViewModel(),
+    viewModelP: ProfileViewModel = hiltViewModel()
 ) {
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            // Haz algo con los datos aquí
+            newData = data
+        }
+    }
     Card(
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
@@ -47,9 +59,13 @@ fun MyPostsCard(
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = Color.LightGray
+        backgroundColor = if (newData) {
+            Color.LightGray
+        } else {
+            Color.White
+        },
     ) {
-        Column() {
+        Column {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,19 +83,19 @@ fun MyPostsCard(
                     .padding(start = 10.dp, top = 10.dp, end = 5.dp)
                 ) {
                     Text(
-                        text = "Lorem Ipsum es simplemente el texto de",
+                        text = post.name,
                         fontWeight = FontWeight.Bold,
                         maxLines = 1,
-                        overflow = TextOverflow.Ellipsis
+                        overflow = TextOverflow.Ellipsis,
+                        color = Color.Black
                     )
                     Text(
                         modifier = Modifier.padding(top = 10.dp),
-                        text = "Lorem Ipsum es simplemente sdfsd" +
-                                "sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfs" +
-                                "sdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsd",
+                        text = post.description,
                         fontSize = 13.sp,
                         maxLines = 2,
                         overflow = TextOverflow.Ellipsis,
+                        color = Color.Black
 
                     )
                 }
@@ -110,9 +126,6 @@ fun MyPostsCard(
                     }
                 }
             }
-
-
         }
     }
-
 }

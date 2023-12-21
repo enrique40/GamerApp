@@ -10,7 +10,6 @@ import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.posts.PostsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,9 +39,9 @@ class PostsViewModel @Inject constructor(
         deleteLikeResponse = result
 
     }
-    fun getPosts() = viewModelScope.launch {
+    private fun getPosts() = viewModelScope.launch {
         postsResponse = Response.Loading
-        val result = postsUseCases.getPosts().collect() { response ->
+        postsUseCases.getPosts().collect { response ->
             postsResponse = response
         }
     }

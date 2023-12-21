@@ -35,7 +35,6 @@ import coil.compose.AsyncImage
 import com.example.gamerapp.R
 import com.example.gamerapp.presentation.components.BottomSheets
 import com.example.gamerapp.presentation.components.DefaultTextField
-import com.example.gamerapp.presentation.screens.new_post.NewPostViewModel
 import com.example.gamerapp.presentation.screens.update_post.UpdatePostViewModel
 import com.example.gamerapp.presentation.ui.theme.Red500
 

@@ -27,7 +27,6 @@ fun MyPostsScreen(navController: NavHostController) {
                 modifier = Modifier.padding(bottom = 80.dp),
                 onClick = { navController.navigate(DetailsScreen.NewPost.route) },
                 containerColor = Red500
-
             ) {
                 Icon(
                     imageVector = Icons.Default.Add,

@@ -31,22 +31,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gamerapp.R
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
 import com.example.gamerapp.presentation.screens.Register.RegisterViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
 
-
-
-
 @Composable
-fun RegisterContent(navController: NavHostController, registerViewModel: RegisterViewModel = hiltViewModel()) {
+fun RegisterContent(navController: NavHostController, registerViewModel: RegisterViewModel = hiltViewModel(),  viewModelP: ProfileViewModel = hiltViewModel()) {
 
     val state = registerViewModel.state
     val scrollState = rememberScrollState()
+
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            newData = data
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -133,7 +143,8 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
                         ) {
                             Icon(
                                 painter = if (registerViewModel.passwordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
-                                contentDescription = "Toggle Password Icon"
+                                contentDescription = "Toggle Password Icon",
+                                tint = if (newData) Color.LightGray else Color.White
                             )
                         }
                     },
@@ -158,7 +169,9 @@ fun RegisterContent(navController: NavHostController, registerViewModel: Registe
                         ) {
                             Icon(
                                 painter = if (registerViewModel.confirmPasswordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
-                                contentDescription = "Toggle Password Icon"
+                                contentDescription = "Toggle Password Icon",
+                                tint = if (newData) Color.LightGray else Color.White
+
                             )
                         }
                     },

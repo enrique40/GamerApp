@@ -8,12 +8,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailPostViewModel @Inject constructor(
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // TODO para obtener el post que se esta enviando de la pantalla anterior
     val data = savedStateHandle.get<String>("post")
     val post = Post.fromJson(data ?: "")
-
-
 }

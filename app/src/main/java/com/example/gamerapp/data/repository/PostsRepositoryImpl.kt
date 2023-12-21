@@ -1,6 +1,5 @@
 package com.example.gamerapp.data.repository
 
-import android.net.Uri
 import com.example.gamerapp.core.Constants.POSTS
 import com.example.gamerapp.core.Constants.USERS
 import com.example.gamerapp.domain.model.Post
@@ -10,6 +9,7 @@ import com.example.gamerapp.domain.repository.PostsRepository
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.storage.StorageReference
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
@@ -27,6 +27,7 @@ class PostsRepositoryImpl @Inject constructor(
     @Named(USERS) private val usersRef: CollectionReference,
     @Named(POSTS) private val storagePostRef: StorageReference,
 ): PostsRepository {
+    @OptIn(DelicateCoroutinesApi::class)
     override fun getPosts(): Flow<Response<List<Post>>> = callbackFlow{
         val snapshotListener = postsRef.addSnapshotListener { snapshot, e ->
             GlobalScope.launch(IO) {
@@ -39,8 +40,8 @@ class PostsRepositoryImpl @Inject constructor(
 
                     val idUserArray = ArrayList<String>()
 
-                    post.forEach { post->
-                        idUserArray.add(post.idUser)
+                    post.forEach { data->
+                        idUserArray.add(data.idUser)
                     }
 
                     val idUserList = idUserArray.toSet().toList() //ELEMENTOS SIN REPETIR
@@ -95,9 +96,7 @@ class PostsRepositoryImpl @Inject constructor(
     override suspend fun create(post: Post, file: File): Response<Boolean> {
        return try {
             //IMAGE
-            val fromFile = Uri.fromFile(file)
             val ref = storagePostRef.child(file.name)
-            val uploadTask = ref.putFile(fromFile).await()
             val url = ref.downloadUrl.await()
 
             //DATA
@@ -114,9 +113,7 @@ class PostsRepositoryImpl @Inject constructor(
         return try {
             //IMAGE
             if (file != null) {
-                val fromFile = Uri.fromFile(file)
                 val ref = storagePostRef.child(file.name)
-                val uploadTask = ref.putFile(fromFile).await()
                 val url = ref.downloadUrl.await()
                 post.image = url.toString()
             }

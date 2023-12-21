@@ -8,7 +8,7 @@ import com.example.gamerapp.presentation.screens.detail_post.components.DetailPo
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun DetailPostScreen(navController: NavHostController, post: String) {
+fun DetailPostScreen(navController: NavHostController) {
     Scaffold (
         content = {
             DetailPostContent(navController)

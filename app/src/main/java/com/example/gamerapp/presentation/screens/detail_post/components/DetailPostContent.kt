@@ -1,7 +1,6 @@
 package com.example.gamerapp.presentation.screens.detail_post.components
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,6 +21,11 @@ import androidx.compose.material.Divider
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -36,58 +40,71 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.gamerapp.R
 import com.example.gamerapp.presentation.screens.detail_post.DetailPostViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 @Composable
-fun DetailPostContent(navController: NavHostController, viewModel: DetailPostViewModel = hiltViewModel()) {
+fun DetailPostContent(
+    navController: NavHostController,
+    viewModel: DetailPostViewModel = hiltViewModel(),
+    viewModelP: ProfileViewModel = hiltViewModel()
+) {
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            newData = data
+        }
+    }
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight()
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .fillMaxHeight()
-        .background(Color.Black)
-        .verticalScroll(rememberScrollState())) {
+    ) {
         Box {
-            Card(
-                shape = RoundedCornerShape(bottomEndPercent = 5, bottomStartPercent = 5)
+            AsyncImage(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                model = viewModel.post.image,
+                contentDescription = "",
+                contentScale = ContentScale.Crop
+            )
+            FloatingActionButton(
+                modifier = Modifier
+                    .padding(top = 10.dp, start = 20.dp)
+                    .size(45.dp),
+                onClick = { navController.popBackStack() },
+                shape = RoundedCornerShape(12.dp),
+                backgroundColor = Red500
             ) {
-                AsyncImage(
+                Image(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp),
-                    model = viewModel.post.image,
-                    contentDescription = "",
-                    contentScale = ContentScale.Crop
+                        .align(Alignment.Center)
+                        .padding(start = 5.dp),
+                    painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
+                    contentDescription = ""
                 )
-                FloatingActionButton(
-                    modifier = Modifier.padding(top = 10.dp, start = 25.dp).size(45.dp),
-                    onClick = { navController.popBackStack() },
-                    shape = RoundedCornerShape(12.dp),
-                    backgroundColor = Red500) {
-                    Image(
-                        modifier = Modifier.align(Alignment.Center).padding(start = 5.dp),
-                        painter = painterResource(id = R.drawable.baseline_arrow_back_ios_24),
-                        contentDescription = ""
-                    )
-                }
-                /*IconButton(onClick = { navController.popBackStack() }) {
-                    Icon(
-                        modifier = Modifier.size(35.dp),
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }*/
             }
+            /*IconButton(onClick = { navController.popBackStack() }) {
+                Icon(
+                    modifier = Modifier.size(35.dp),
+                    imageVector = Icons.Default.ArrowBack,
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }*/
+
 
         }
         if (!viewModel.post.user?.username.isNullOrBlank()) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 15.dp, horizontal = 20.dp)
-                ,
+                    .padding(vertical = 15.dp, horizontal = 20.dp),
                 elevation = 4.dp,
                 shape = RoundedCornerShape(10.dp),
+                backgroundColor = if (newData) Color.Gray else Color.White
             ) {
                 Row(modifier = Modifier.padding(vertical = 15.dp, horizontal = 15.dp)) {
                     AsyncImage(
@@ -110,14 +127,14 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                     }
                 }
             }
-        }else {
+        } else {
             Spacer(modifier = Modifier.height(15.dp))
         }
         Text(
             modifier = Modifier.padding(start = 20.dp, bottom = 15.dp),
             text = viewModel.post.name,
             fontSize = 13.sp,
-            color = Red500,
+            color = if (newData) Red500 else Color.Black,
             fontWeight = FontWeight.Bold
 
         )
@@ -143,7 +160,8 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
                         }
 
                     ),
-                    contentDescription = "")
+                    contentDescription = ""
+                )
                 Spacer(modifier = Modifier.width(7.dp))
                 Text(
                     text = viewModel.post.category,
@@ -157,22 +175,26 @@ fun DetailPostContent(navController: NavHostController, viewModel: DetailPostVie
             modifier = Modifier.padding(end = 20.dp, top = 10.dp, bottom = 10.dp),
             startIndent = 20.dp,
             thickness = 1.dp,
-            color = Color.DarkGray
+            color = if (newData) Color.Gray else Color.Black
         )
         Text(
             modifier = Modifier.padding(horizontal = 20.dp, vertical = 10.dp),
             text = "DESCRIPCION",
             fontWeight = FontWeight.Bold,
             fontSize = 17.sp,
-            color = Color.White
+            color = if (newData) Color.White else Color.Black
 
         )
-        Text(
-            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp),
-            text = viewModel.post.description,
-            fontSize = 14.sp,
-            color = Color.White
+        Column( modifier = Modifier
+            .fillMaxWidth()
+            .verticalScroll(rememberScrollState())) {
+            Text(
+                modifier = Modifier.padding(horizontal = 20.dp, vertical = 8.dp),
+                text = viewModel.post.description,
+                fontSize = 15.sp,
+                color = if (newData) Color.White else Color.Black
+            )
+        }
 
-        )
     }
 }

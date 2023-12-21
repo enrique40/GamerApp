@@ -13,7 +13,7 @@ import com.example.gamerapp.domain.model.Post
 @Composable
 fun MyPostsContent(
     navController: NavHostController,
-    post: List<Post>
+    post: List<Post>,
 ) {
    LazyColumn(
        modifier = Modifier.fillMaxWidth()

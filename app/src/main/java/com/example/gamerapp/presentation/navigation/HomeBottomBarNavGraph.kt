@@ -5,7 +5,6 @@ import androidx.compose.material.icons.filled.List
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.outlined.List
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -15,7 +14,7 @@ import com.example.gamerapp.presentation.screens.posts.PostsScreen
 import com.example.gamerapp.presentation.screens.profile.ProfileScreen
 
 @Composable
-fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: MutableState<Boolean>) {
+fun HomeBottonBarNavGraph(navController: NavHostController) {
     //startDestination para identificar la ruta inicial
     NavHost(
         navController = navController,
@@ -30,7 +29,7 @@ fun HomeBottonBarNavGraph(navController: NavHostController,  darkMode: MutableSt
             MyPostsScreen(navController)
         }
         composable(route = HomeBottomBarScreen.Profile.route){
-            ProfileScreen(navController, darkMode)
+            ProfileScreen(navController)
         }
 
         detailsNavGraph(navController)
@@ -47,13 +46,11 @@ sealed class HomeBottomBarScreen(
         title = "Posts",
         icon = Icons.Default.List
     )
-
     object MyPosts: HomeBottomBarScreen(
         route = "my_posts",
         title = "Mis posts",
         icon = Icons.Outlined.List
     )
-
     object Profile: HomeBottomBarScreen(
         route = "profile",
         title = "Perfil",

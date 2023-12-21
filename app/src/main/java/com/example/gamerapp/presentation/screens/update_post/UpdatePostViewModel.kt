@@ -43,7 +43,7 @@ class UpdatePostViewModel @Inject constructor(
         private set
 
     //USER SESSION
-    val currentUser = authUseCases.getCurrentUser()
+    private val currentUser = authUseCases.getCurrentUser()
 
     val radioOptions = listOf(
         CategoryRadioButtom("PC", R.drawable.icon_pc),
@@ -62,7 +62,7 @@ class UpdatePostViewModel @Inject constructor(
         )
     }
 
-    fun updatePost(post: Post) = viewModelScope.launch {
+    private fun updatePost(post: Post) = viewModelScope.launch {
         updatePostResponse = Response.Loading
         val result = postsUseCases.updatePost(post, file)
         updatePostResponse = result

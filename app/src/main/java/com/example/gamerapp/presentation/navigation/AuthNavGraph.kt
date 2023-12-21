@@ -16,7 +16,6 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
         composable(route =  AuthScreen.Login.route) {
             LoginScreen(navController)
         }
-
         composable(route = AuthScreen.Register.route){
             RegisterSreen(navController)
         }
@@ -24,7 +23,6 @@ fun NavGraphBuilder.authNavGraph(navController: NavHostController) {
 }
 
 sealed class AuthScreen(val route: String) {
-
     object Login: AuthScreen(route = "login")
     object Register: AuthScreen(route = "register")
 }

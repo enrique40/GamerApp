@@ -12,6 +12,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -26,9 +31,17 @@ import com.example.gamerapp.R
 import com.example.gamerapp.domain.model.Post
 import com.example.gamerapp.presentation.navigation.DetailsScreen
 import com.example.gamerapp.presentation.screens.posts.PostsViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 
 @Composable
-fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel()) {
+fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsViewModel = hiltViewModel(), viewModelP: ProfileViewModel = hiltViewModel()) {
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            // Haz algo con los datos aquí
+            newData = data
+        }
+    }
     Card(
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
@@ -37,9 +50,13 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
             },
         elevation = 4.dp,
         shape = RoundedCornerShape(20.dp),
-        backgroundColor = Color.LightGray
+        backgroundColor = if (newData) {
+            Color.LightGray
+        } else {
+            Color.White
+        },
     ) {
-        Column() {
+        Column {
             AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -75,7 +92,12 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
                     Image(
                         modifier = Modifier
                             .size(25.dp)
-                            .clickable { viewModel.deleteLike(post.id, viewModel.currentUser?.uid ?: "") },
+                            .clickable {
+                                viewModel.deleteLike(
+                                    post.id,
+                                    viewModel.currentUser?.uid ?: ""
+                                )
+                            },
                         painter = painterResource(id = R.drawable.baseline_favorite_24),
                         contentDescription = ""
                     )

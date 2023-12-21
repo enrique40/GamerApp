@@ -27,8 +27,8 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
                 type = NavType.StringType
             })
         ){
-            it.arguments?.getString("user")?.let { user ->
-                ProfileUpdateScreen(navController, user = user)
+            it.arguments?.getString("user")?.let { _ ->
+                ProfileUpdateScreen(navController)
             }
         }
         composable(
@@ -37,8 +37,8 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
                 type = NavType.StringType
             })
         ){
-            it.arguments?.getString("post")?.let { post ->
-                DetailPostScreen(navController =  navController, post = post)
+            it.arguments?.getString("post")?.let { _ ->
+                DetailPostScreen(navController =  navController)
             }
         }
         composable(
@@ -47,8 +47,8 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
                 type = NavType.StringType
             })
         ){
-            it.arguments?.getString("post")?.let { post ->
-                UpdatePostScreen(navController =  navController, post = post)
+            it.arguments?.getString("post")?.let { _ ->
+                UpdatePostScreen(navController =  navController)
             }
         }
 
@@ -57,7 +57,6 @@ fun NavGraphBuilder.detailsNavGraph (navController: NavHostController) {
 
 
 sealed class DetailsScreen(val route: String) {
-
     object NewPost: DetailsScreen(route = "posts/new")
     object ProfileUpdate: DetailsScreen(route = "profile/update/{user}") {
         fun passUser(user: String) = "profile/update/$user"

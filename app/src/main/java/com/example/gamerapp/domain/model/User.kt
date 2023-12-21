@@ -17,7 +17,7 @@ data class User(
             username,
             email,
             password,
-            if(image != null) URLEncoder.encode(image, StandardCharsets.UTF_8.toString()) else ""
+            URLEncoder.encode(image, StandardCharsets.UTF_8.toString())
         )
     )
 

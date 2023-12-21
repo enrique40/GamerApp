@@ -30,22 +30,34 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.gamerapp.R
 import androidx.compose.material3.Icon
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.example.gamerapp.presentation.components.DefaultButtom
 import com.example.gamerapp.presentation.components.DefaultTextField
 import com.example.gamerapp.presentation.screens.login.LoginViewModel
+import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 import com.example.gamerapp.presentation.ui.theme.Dargray500
 import com.example.gamerapp.presentation.ui.theme.Red500
 
 
 
 @Composable
-fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel()) {
+fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = hiltViewModel(), viewModelP: ProfileViewModel = hiltViewModel()) {
 
     val scrollState = rememberScrollState()
     val state = viewModel.state
-
+    var newData by remember { mutableStateOf(false) }
+    LaunchedEffect(key1 = true) {
+        viewModelP.dataFromDataStore.collect { data ->
+            // Haz algo con los datos aquí
+            newData = data
+        }
+    }
     Box(
         modifier = Modifier
             .fillMaxWidth(),
@@ -83,7 +95,8 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
                     modifier = Modifier.padding(top = 40.dp),
                     text = "LOGIN",
                     fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
@@ -118,7 +131,8 @@ fun LoginContent(navController: NavHostController, viewModel: LoginViewModel = h
                         ) {
                             Icon(
                                 painter = if (viewModel.passwordVisibility) painterResource(id = R.drawable.visibility_fill0) else painterResource(id = R.drawable.visibility_off),
-                                contentDescription = "Toggle Password Icon"
+                                contentDescription = "Toggle Password Icon",
+                                tint = if (newData) Color.LightGray else Color.White
                             )
                         }
                     },

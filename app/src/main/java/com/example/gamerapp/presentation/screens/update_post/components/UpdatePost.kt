@@ -6,7 +6,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.gamerapp.domain.model.Response
 import com.example.gamerapp.presentation.components.ProgressBar
-import com.example.gamerapp.presentation.screens.new_post.NewPostViewModel
 import com.example.gamerapp.presentation.screens.update_post.UpdatePostViewModel
 
 @Composable
