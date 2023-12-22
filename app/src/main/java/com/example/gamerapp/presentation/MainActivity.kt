@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,7 +17,6 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gamerapp.presentation.navigation.RootNavGraph
-import com.example.gamerapp.presentation.screens.profile.ProfileViewModel
 import com.example.gamerapp.presentation.screens.profile.UserPreferencesRepository
 import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +30,6 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var userPreferencesRepository: UserPreferencesRepository
-    private val viewModel: ProfileViewModel by viewModels() // Use a shared view model
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,11 +41,9 @@ class MainActivity : ComponentActivity() {
                     settings[booleanPreferencesKey("themaa")] ?: false
                 }.collect { dataFromDataStore ->
                     darkMode = dataFromDataStore
-                    // Usa el valor de dataFromDataStore aquí
-                    Log.e("TAG", "onCreate -$dataFromDataStore")
                 }
             }
-            Log.e("TAG", "onCreate 2 --${darkMode}")
+
             GamerAppTheme(darkTheme = darkMode) {
                 // A surface container using the 'background' color from the theme
                 Surface(

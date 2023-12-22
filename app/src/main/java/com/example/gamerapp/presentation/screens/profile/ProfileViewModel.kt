@@ -1,6 +1,5 @@
 package com.example.gamerapp.presentation.screens.profile
 
-import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -48,7 +47,6 @@ class ProfileViewModel @Inject constructor(
     }
 
      suspend fun saveToDataStore(value: Boolean) {
-         Log.e("TAG", "saveToDataStore ${value}")
         userPreferencesRepository.dataStore.edit { settings ->
             settings[booleanPreferencesKey("themaa")] = value
         }

@@ -38,7 +38,6 @@ fun PostsCard(navController: NavHostController, post: Post, viewModel: PostsView
     var newData by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = true) {
         viewModelP.dataFromDataStore.collect { data ->
-            // Haz algo con los datos aquí
             newData = data
         }
     }
