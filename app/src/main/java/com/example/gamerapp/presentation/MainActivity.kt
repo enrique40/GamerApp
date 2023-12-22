@@ -1,7 +1,6 @@
 package com.example.gamerapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -17,7 +16,7 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.gamerapp.presentation.navigation.RootNavGraph
-import com.example.gamerapp.presentation.screens.profile.UserPreferencesRepository
+import com.example.gamerapp.presentation.utils.UserPreferencesRepository
 import com.example.gamerapp.presentation.ui.theme.GamerAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.map
@@ -35,7 +34,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             var darkMode by remember { mutableStateOf(false) }
-            Log.e("TAG", "onCreate 1 --${darkMode}")
             LaunchedEffect(Unit) {
                 userPreferencesRepository.dataStore.data.map { settings ->
                     settings[booleanPreferencesKey("themaa")] ?: false
@@ -45,7 +43,6 @@ class MainActivity : ComponentActivity() {
             }
 
             GamerAppTheme(darkTheme = darkMode) {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background

@@ -1,4 +1,4 @@
-package com.example.gamerapp.presentation.screens.profile
+package com.example.gamerapp.presentation.utils
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences

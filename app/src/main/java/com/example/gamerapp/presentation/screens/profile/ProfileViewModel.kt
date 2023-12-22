@@ -10,6 +10,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gamerapp.domain.model.User
 import com.example.gamerapp.domain.use_cases.auth.AuthUseCases
 import com.example.gamerapp.domain.use_cases.users.UsersUseCase
+import com.example.gamerapp.presentation.utils.UserPreferencesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
