@@ -42,7 +42,7 @@ fun MyPostsCard(
     navController: NavHostController,
     post: Post,
     viewModel: MyPostsViewModel = hiltViewModel(),
-    viewModelP: ProfileViewModel = hiltViewModel()
+    viewModelP: ProfileViewModel = hiltViewModel(),
 ) {
     var newData by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = true) {

@@ -22,6 +22,7 @@ class PostsViewModel @Inject constructor(
     var postsResponse by mutableStateOf<Response<List<Post>>?>(null)
     var likeResponse by mutableStateOf<Response<Boolean>?>(null)
     var deleteLikeResponse by mutableStateOf<Response<Boolean>?>(null)
+    var isScrollInProgress by mutableStateOf(false)
     var currentUser = authUseCases.getCurrentUser()
     init {
         getPosts()
@@ -44,5 +45,9 @@ class PostsViewModel @Inject constructor(
         postsUseCases.getPosts().collect { response ->
             postsResponse = response
         }
+    }
+
+    fun isScrollInProgress(data: Boolean) {
+        isScrollInProgress = data
     }
 }
