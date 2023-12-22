@@ -57,7 +57,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
     var newData by remember { mutableStateOf(false) }
     LaunchedEffect(key1 = true) {
         viewModelP.dataFromDataStore.collect { data ->
-            // Haz algo con los datos aquí
+            viewModelP.themma = !data
             newData = data
         }
     }
@@ -113,7 +113,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                     .clickable {
                         isDarkThemeIcon.value = !isDarkThemeIcon.value
                         CoroutineScope(IO).launch {
-                            viewModel.saveToDataStore(isDarkThemeIcon.value)
+                            viewModel.saveToDataStore(viewModelP.themma)
                         }
 
                     }
@@ -129,7 +129,7 @@ fun ProfileContent(navController: NavHostController, viewModel: ProfileViewModel
                 .clickable {
                     isDarkThemeIcon.value = !isDarkThemeIcon.value
                     CoroutineScope(IO).launch {
-                        viewModel.saveToDataStore(isDarkThemeIcon.value)
+                        viewModel.saveToDataStore(viewModelP.themma)
                     }
                 },
                 painter = painterResource(id = R.drawable.baseline_light_mode_24),
